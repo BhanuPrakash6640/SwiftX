@@ -67,6 +67,12 @@ All benchmarks measured directly on an **NVIDIA GeForce RTX 3050 Laptop GPU (4 G
 
 ### 2. Inference State Memory vs Sequence Length
 
+<p align="center">
+  <img src="assets/memory_slider_screenshot.png" width="450" alt="Interactive Memory Scaling Comparison at 512 words">
+</p>
+
+> **Figure 4:** Interactive Memory Scaling from [`frontend/index.html`](file:///frontend/index.html): At 512 context tokens, Transformer requires 2.0 MB KV cache, while Sift stays fixed at 140 KB and SiftX stays bounded at 172 KB ($O(1)$ constant memory).
+
 | Tokens | Sift Recurrent State | Transformer KV Cache | Memory Ratio (TF / Sift) |
 |---|---|---|---|
 | 256 | **140.0 KiB** | 1,024.0 KiB | 7.3× |
