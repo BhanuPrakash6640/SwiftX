@@ -1,0 +1,32 @@
+[Wed 11/04/2026 22:32:27.51] START 
+Using Python: .venv\Scripts\python.exe 
+Requirement already satisfied: pip in .\.venv\Lib\site-packages (26.3)
+Requirement already satisfied: numpy in .\.venv\Lib\site-packages (2.5.4)
+Requirement already satisfied: pyyaml in .\.venv\Lib\site-packages (6.0.3)
+Requirement already satisfied: matplotlib in .\.venv\Lib\site-packages (3.11.2)
+Requirement already satisfied: pytest in .\.venv\Lib\site-packages (9.2.0)
+Requirement already satisfied: pandas in .\.venv\Lib\site-packages (3.1.1)
+Requirement already satisfied: pyarrow in .\.venv\Lib\site-packages (26.0.1)
+Requirement already satisfied: contourpy>=1.0.1 in .\.venv\Lib\site-packages (from matplotlib) (1.4.0)
+Requirement already satisfied: cycler>=0.10 in .\.venv\Lib\site-packages (from matplotlib) (0.12.1)
+Requirement already satisfied: fonttools>=4.28.2 in .\.venv\Lib\site-packages (from matplotlib) (4.68.0)
+Requirement already satisfied: kiwisolver>=1.3.1 in .\.venv\Lib\site-packages (from matplotlib) (1.5.1)
+Requirement already satisfied: packaging>=20.0 in .\.venv\Lib\site-packages (from matplotlib) (26.3)
+Requirement already satisfied: pillow>=9 in .\.venv\Lib\site-packages (from matplotlib) (13.0.0)
+Requirement already satisfied: pyparsing>=3 in .\.venv\Lib\site-packages (from matplotlib) (3.3.3)
+Requirement already satisfied: python-dateutil>=2.7 in .\.venv\Lib\site-packages (from matplotlib) (4.0.0)
+Requirement already satisfied: colorama>=0.4 in .\.venv\Lib\site-packages (from pytest) (0.4.6)
+Requirement already satisfied: iniconfig>=2 in .\.venv\Lib\site-packages (from pytest) (2.3.1)
+Requirement already satisfied: pluggy<2,>=1.6 in .\.venv\Lib\site-packages (from pytest) (1.7.0)
+Requirement already satisfied: pygments>=2.15 in .\.venv\Lib\site-packages (from pytest) (2.21.0)
+Requirement already satisfied: tzdata in .\.venv\Lib\site-packages (from pandas) (2026.6)
+GPU: NVIDIA GeForce RTX 3050 Laptop GPU
+torch 2.11.0+cu128 bf16 True
+[Wed 11/04/2026 22:32:46.49] TESTS 
+....................................................                     [100%]
+52 passed in 22.21s
+[Wed 11/04/2026 22:33:11.98] TRAIN sift_copy 
+[Wed 11/04/2026 22:33:11.98] TRAIN transformer_copy 
+[Wed 11/04/2026 22:33:11.98] TRAIN sift_adding 
+[Wed 11/04/2026 22:33:11.98] TRAIN transformer_adding 
+[Wed 11/04/2026 22:33:11.98] TRAIN sift_shakespeare 

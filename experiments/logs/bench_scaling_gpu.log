@@ -1,0 +1,70 @@
+train step L=  128 sift             198.4 ms
+train step L=  128 transformer       26.1 ms
+train step L=  256 sift             317.4 ms
+train step L=  256 transformer       34.2 ms
+train step L=  512 sift             645.8 ms
+train step L=  512 transformer       31.0 ms
+train step L= 1024 sift            1340.1 ms
+train step L= 1024 transformer       36.0 ms
+train step L= 2048 sift            2892.3 ms
+train step L= 2048 transformer      102.9 ms
+train step L= 4096 sift           89831.4 ms
+train step L= 4096 transformer      342.5 ms
+reference (autograd loop)        fwd    130.9 ms   fwd+bwd    736.9 ms
+parallel (associative scan)      fwd     23.7 ms   fwd+bwd     82.1 ms
+sequential (custom backward)     fwd     69.6 ms   fwd+bwd    269.1 ms
+fused (chunked recompute)        fwd    270.8 ms   fwd+bwd   1159.9 ms
+{
+  "hardware": {
+    "device": "cuda",
+    "torch": "2.11.0+cu128",
+    "threads": 8,
+    "platform": "Windows-11-10.0.26300-SP0",
+    "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU"
+  },
+  "train_step_ms_batch4": {
+    "sift": {
+      "128": 198.44239996746182,
+      "256": 317.4238000065088,
+      "512": 645.7802999648266,
+      "1024": 1340.0554000400007,
+      "2048": 2892.301900021266,
+      "4096": 89831.40110003296
+    },
+    "transformer": {
+      "128": 26.09100000699982,
+      "256": 34.184399992227554,
+      "512": 31.015499960631132,
+      "1024": 35.95109999878332,
+      "2048": 102.92289999779314,
+      "4096": 342.5283000105992
+    }
+  },
+  "scan_implementations": {
+    "shape": {
+      "b": 8,
+      "L": 256,
+      "D": 256,
+      "N": 16
+    },
+    "results": {
+      "reference (autograd loop)": {
+        "forward_ms": 130.93439996009693,
+        "fwd_bwd_ms": 736.8568999809213
+      },
+      "parallel (associative scan)": {
+        "forward_ms": 23.677099961787462,
+        "fwd_bwd_ms": 82.09779998287559
+      },
+      "sequential (custom backward)": {
+        "forward_ms": 69.6407999494113,
+        "fwd_bwd_ms": 269.1086000413634
+      },
+      "fused (chunked recompute)": {
+        "forward_ms": 270.8148999954574,
+        "fwd_bwd_ms": 1159.8956999951042
+      }
+    }
+  }
+}

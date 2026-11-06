@@ -1,0 +1,22 @@
+name: transformer_copy
+model:
+  type: transformer
+  d_model: 64
+  n_layers: 1
+  n_heads: 4
+task:
+  name: copy
+  n_copy: 16
+  n_symbols: 8
+train:
+  batch_size: 64
+  max_steps: 1500
+  lr: 0.003
+  min_lr: 0.0003
+  warmup_steps: 100
+  weight_decay: 0.1
+  grad_clip: 1.0
+  eval_every: 100
+  eval_batches: 4
+  seed: 0
+  amp: false

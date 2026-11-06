@@ -1,0 +1,40 @@
+[Thu 11/05/2026 10:33:22.73] START 
+wrote 24 configs to C:\Users\bobby\Downloads\sift\configs\research
+........................................................................ [ 88%]
+.........                                                                [100%]
+81 passed in 29.86s
+[Thu 11/05/2026 10:34:03.54] TRAIN sift_shakespeare_gpu 
+[Thu 11/05/2026 11:02:19.02] START 
+wrote 27 configs to C:\Users\bobby\Downloads\sift\configs\research
+........................................................................ [ 72%]
+..........................s                                              [100%]
+98 passed, 1 skipped in 42.90s
+[Thu 11/05/2026 11:03:18.03] RESUME sift_shakespeare_gpu 
+[Thu 11/05/2026 11:12:45.24] START PART 1 
+wrote 27 configs to C:\Users\bobby\Downloads\sift\configs\research
+........................................................................ [ 72%]
+..........................s                                              [100%]
+98 passed, 1 skipped in 37.82s
+[Thu 11/05/2026 11:13:35.44] RESUME sift_shakespeare_gpu 
+[Thu 11/05/2026 12:03:04.33] TRAIN transformer_shakespeare_gpu 
+[Thu 11/05/2026 12:04:32.45] TRAIN sift_wikitext2_gpu 
+[Fri 11/06/2026  8:54:52.26] START 
+wrote 27 configs to C:\Users\bobby\Downloads\sift\configs\research
+........................................................................ [ 72%]
+..........................s                                              [100%]
+98 passed, 1 skipped in 83.26s (0:01:23)
+[Fri 11/06/2026  8:56:58.63] RESUME sift_wikitext2_gpu 
+[Fri 11/06/2026  9:58:20.88] TRAIN transformer_wikitext2_gpu 
+Matplotlib is building the font cache; this may take a moment.
+wrote C:\Users\bobby\Downloads\sift\experiments\results\plots\wikitext2_val_loss_cuda.png
+wrote C:\Users\bobby\Downloads\sift\experiments\results\plots\shakespeare_val_loss_cuda.png
+wrote C:\Users\bobby\Downloads\sift\experiments\results\plots\copy_accuracy_cuda.png
+wrote C:\Users\bobby\Downloads\sift\experiments\results\plots\adding_mse_cuda.png
+wrote C:\Users\bobby\Downloads\sift\experiments\results\plots\generation_latency_cuda.png
+wrote C:\Users\bobby\Downloads\sift\experiments\results\plots\prompt_latency_cuda.png
+wrote C:\Users\bobby\Downloads\sift\experiments\results\plots\inference_state_cuda.png
+wrote C:\Users\bobby\Downloads\sift\experiments\results\plots\train_memory_cuda.png
+wrote C:\Users\bobby\Downloads\sift\experiments\results\plots\train_step_scaling_cuda.png
+wrote C:\Users\bobby\Downloads\sift\experiments\results\plots\scan_implementations_cuda.png
+[Fri 11/06/2026 10:14:28.22] PART 1 DONE 
+[Fri 11/06/2026 10:14:28.26] TRAIN mqar_sift_s0 

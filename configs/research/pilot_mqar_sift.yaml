@@ -1,0 +1,24 @@
+name: pilot_mqar_sift
+model:
+  type: siftx
+  variant: sift
+  d_model: 64
+  n_layers: 4
+  d_state: 16
+  chunk: 16
+  mem_slots: 32
+task:
+  name: mqar
+  seq_len: 128
+  n_pairs: 16
+train:
+  batch_size: 32
+  max_steps: 800
+  lr: 0.003
+  min_lr: 0.0003
+  warmup_steps: 50
+  weight_decay: 0.1
+  grad_clip: 1.0
+  eval_every: 100
+  eval_batches: 4
+  seed: 0

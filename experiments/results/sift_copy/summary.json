@@ -1,0 +1,14 @@
+{
+  "name": "sift_copy",
+  "model": "sift",
+  "task": "copy",
+  "params": 66112,
+  "device": "cpu",
+  "steps": 1500,
+  "final_train_loss": 0.11999213814735413,
+  "final_val_loss": 0.1124326754361391,
+  "final_val_metric": 0.954833984375,
+  "train_time_s": 396.6216461658478,
+  "tokens_per_s": 7987.461175216084,
+  "peak_gpu_mem_mb": null
+}

@@ -1,0 +1,17 @@
+{
+  "name": "sift_wikitext2_gpu",
+  "model": "sift",
+  "task": "wikitext2",
+  "params": 3790592,
+  "device": "cuda",
+  "steps": 2000,
+  "final_train_loss": 1.2074346208572388,
+  "final_val_loss": 1.251917541027069,
+  "final_val_metric": null,
+  "final_retrieval_rate": null,
+  "train_time_s": 3536.382748365402,
+  "tokens_per_s": 1447.8070854651075,
+  "peak_gpu_mem_mb": 1993.904296875,
+  "val_perplexity": 3.4970422543168462,
+  "val_bits_per_char": 1.806135228041658
+}

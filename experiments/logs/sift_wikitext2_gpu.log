@@ -1,0 +1,30 @@
+[sift_wikitext2_gpu] sift  params=3,790,592  device=cuda
+step   200 | train 2.3481 | val 1.6366 | 504.4s
+step   400 | train 1.5611 | val 1.5034 | 503.8s
+step   600 | train 1.4589 | val 1.4290 | 503.7s
+step   800 | train 1.3965 | val 1.3875 | 503.8s
+[sift_wikitext2_gpu] sift  params=3,790,592  device=cuda
+step   800 | train 1.3711 | val 1.3856 | 183.1s
+step  1000 | train 1.3411 | val 1.3494 | 572.8s
+step  1200 | train 1.2862 | val 1.3210 | 584.2s
+step  1400 | train 1.2479 | val 1.2997 | 576.2s
+step  1600 | train 1.2206 | val 1.2794 | 574.8s
+step  1800 | train 1.2140 | val 1.2604 | 577.7s
+step  2000 | train 1.2074 | val 1.2519 | 579.4s
+{
+  "name": "sift_wikitext2_gpu",
+  "model": "sift",
+  "task": "wikitext2",
+  "params": 3790592,
+  "device": "cuda",
+  "steps": 2000,
+  "final_train_loss": 1.2074346208572388,
+  "final_val_loss": 1.251917541027069,
+  "final_val_metric": null,
+  "final_retrieval_rate": null,
+  "train_time_s": 3536.382748365402,
+  "tokens_per_s": 1447.8070854651075,
+  "peak_gpu_mem_mb": 1993.904296875,
+  "val_perplexity": 3.4970422543168462,
+  "val_bits_per_char": 1.806135228041658
+}

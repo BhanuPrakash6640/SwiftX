@@ -1,0 +1,27 @@
+name: diag_gate_only
+model:
+  type: siftx
+  variant: siftx
+  d_model: 64
+  n_layers: 4
+  d_state: 16
+  chunk: 16
+  mem_slots: 32
+  policy: full
+  timescales: null
+  pathway_gate: false
+task:
+  name: mqar
+  seq_len: 128
+  n_pairs: 16
+train:
+  batch_size: 32
+  max_steps: 1200
+  lr: 0.003
+  min_lr: 0.0003
+  warmup_steps: 50
+  weight_decay: 0.1
+  grad_clip: 1.0
+  eval_every: 100
+  eval_batches: 4
+  seed: 0

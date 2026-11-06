@@ -1,0 +1,14 @@
+{
+  "name": "transformer_copy_gpu",
+  "model": "transformer",
+  "task": "copy",
+  "params": 52864,
+  "device": "cuda",
+  "steps": 3000,
+  "final_train_loss": 2.749962314751997e-08,
+  "final_val_loss": 3.245076563018756e-08,
+  "final_val_metric": 1.0,
+  "train_time_s": 34.32220149040222,
+  "tokens_per_s": 184603.54303822218,
+  "peak_gpu_mem_mb": 29.55419921875
+}

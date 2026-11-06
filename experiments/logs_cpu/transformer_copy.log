@@ -1,0 +1,30 @@
+[transformer_copy] transformer  params=52,864  device=cpu
+step   100 | train 1.3888 | val 0.0108 metric=1.000 | 1.9s
+step   200 | train 0.0022 | val 0.0005 metric=1.000 | 1.8s
+step   300 | train 0.0002 | val 0.0000 metric=1.000 | 1.9s
+step   400 | train 0.0000 | val 0.0000 metric=1.000 | 1.8s
+step   500 | train 0.0000 | val 0.0000 metric=1.000 | 1.7s
+step   600 | train 0.0000 | val 0.0000 metric=1.000 | 1.8s
+step   700 | train 0.0000 | val 0.0000 metric=1.000 | 1.7s
+step   800 | train 0.0000 | val 0.0000 metric=1.000 | 1.9s
+step   900 | train 0.0000 | val 0.0000 metric=1.000 | 1.8s
+step  1000 | train 0.0000 | val 0.0000 metric=1.000 | 1.8s
+step  1100 | train 0.0000 | val 0.0000 metric=1.000 | 1.8s
+step  1200 | train 0.0000 | val 0.0000 metric=1.000 | 1.8s
+step  1300 | train 0.0000 | val 0.0000 metric=1.000 | 1.7s
+step  1400 | train 0.0000 | val 0.0000 metric=1.000 | 1.6s
+step  1500 | train 0.0000 | val 0.0000 metric=1.000 | 1.7s
+{
+  "name": "transformer_copy",
+  "model": "transformer",
+  "task": "copy",
+  "params": 52864,
+  "device": "cpu",
+  "steps": 1500,
+  "final_train_loss": 2.5390179327899886e-08,
+  "final_val_loss": 2.2409947231238903e-08,
+  "final_val_metric": 1.0,
+  "train_time_s": 25.94221591949463,
+  "tokens_per_s": 122117.55579519957,
+  "peak_gpu_mem_mb": null
+}

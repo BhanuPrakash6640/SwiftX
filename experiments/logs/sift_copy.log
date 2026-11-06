@@ -1,0 +1,30 @@
+[sift_copy] sift  params=66,112  device=cpu
+step   100 | train 2.1141 | val 1.9713 metric=0.229 | 20.3s
+step   200 | train 1.7632 | val 1.6080 metric=0.351 | 19.7s
+step   300 | train 1.4985 | val 1.3424 metric=0.441 | 20.6s
+step   400 | train 1.1843 | val 1.0310 metric=0.567 | 19.5s
+step   500 | train 0.9203 | val 0.8342 metric=0.640 | 19.4s
+step   600 | train 0.6917 | val 0.6387 metric=0.739 | 20.2s
+step   700 | train 0.5437 | val 0.4824 metric=0.802 | 18.7s
+step   800 | train 0.4663 | val 0.4030 metric=0.844 | 19.7s
+step   900 | train 0.3683 | val 0.3333 metric=0.865 | 20.6s
+step  1000 | train 0.3026 | val 0.2646 metric=0.899 | 117.6s
+step  1100 | train 0.2428 | val 0.2058 metric=0.917 | 24.6s
+step  1200 | train 0.1926 | val 0.1703 metric=0.935 | 21.3s
+step  1300 | train 0.1579 | val 0.1423 metric=0.944 | 19.6s
+step  1400 | train 0.1355 | val 0.1339 metric=0.945 | 19.6s
+step  1500 | train 0.1200 | val 0.1124 metric=0.955 | 18.3s
+{
+  "name": "sift_copy",
+  "model": "sift",
+  "task": "copy",
+  "params": 66112,
+  "device": "cpu",
+  "steps": 1500,
+  "final_train_loss": 0.11999213814735413,
+  "final_val_loss": 0.1124326754361391,
+  "final_val_metric": 0.954833984375,
+  "train_time_s": 396.6216461658478,
+  "tokens_per_s": 7987.461175216084,
+  "peak_gpu_mem_mb": null
+}

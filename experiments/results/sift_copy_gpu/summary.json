@@ -1,0 +1,14 @@
+{
+  "name": "sift_copy_gpu",
+  "model": "sift",
+  "task": "copy",
+  "params": 66112,
+  "device": "cuda",
+  "steps": 3000,
+  "final_train_loss": 0.0012567221545032225,
+  "final_val_loss": 0.000696919858455658,
+  "final_val_metric": 1.0,
+  "train_time_s": 173.3709635734558,
+  "tokens_per_s": 36545.91212625689,
+  "peak_gpu_mem_mb": 222.84619140625
+}

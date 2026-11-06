@@ -1,0 +1,14 @@
+{
+  "name": "sift_adding_lr3e3",
+  "model": "sift",
+  "task": "adding",
+  "params": 65729,
+  "device": "cpu",
+  "steps": 2000,
+  "final_train_loss": 7.549923835540539e-05,
+  "final_val_loss": 7.811532123014331e-05,
+  "final_val_metric": 1.0,
+  "train_time_s": 2326.7069704532623,
+  "tokens_per_s": 5501.337367595736,
+  "peak_gpu_mem_mb": null
+}

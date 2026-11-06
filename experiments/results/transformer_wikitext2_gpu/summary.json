@@ -1,0 +1,17 @@
+{
+  "name": "transformer_wikitext2_gpu",
+  "model": "transformer",
+  "task": "wikitext2",
+  "params": 3576832,
+  "device": "cuda",
+  "steps": 2000,
+  "final_train_loss": 1.8327508634328842,
+  "final_val_loss": 1.8079645112156868,
+  "final_val_metric": null,
+  "final_retrieval_rate": null,
+  "train_time_s": 214.2869107723236,
+  "tokens_per_s": 38229.11987705991,
+  "peak_gpu_mem_mb": 275.36376953125,
+  "val_perplexity": 6.0980223348783085,
+  "val_bits_per_char": 2.6083414344341103
+}

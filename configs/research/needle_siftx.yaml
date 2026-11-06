@@ -1,0 +1,28 @@
+name: needle_siftx
+model:
+  type: siftx
+  variant: siftx
+  d_model: 128
+  n_layers: 4
+  d_state: 16
+  chunk: 64
+  mem_slots: 32
+  gate_warmup: 1500
+  gate_anneal: 625
+task:
+  name: needle
+  seq_len: 512
+  val_seq_len: 2048
+train:
+  weight_decay: 0.1
+  grad_clip: 1.0
+  warmup_steps: 100
+  amp: true
+  ckpt_every: 500
+  batch_size: 32
+  max_steps: 2500
+  lr: 0.003
+  min_lr: 0.0003
+  eval_every: 250
+  eval_batches: 4
+  seed: 0

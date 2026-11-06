@@ -1,0 +1,14 @@
+{
+  "name": "sift_adding_gpu",
+  "model": "sift",
+  "task": "adding",
+  "params": 65729,
+  "device": "cuda",
+  "steps": 3000,
+  "final_train_loss": 0.0004855426779249683,
+  "final_val_loss": 0.0004373258925625123,
+  "final_val_metric": 0.94921875,
+  "train_time_s": 1231.4021003246307,
+  "tokens_per_s": 31183.965002070992,
+  "peak_gpu_mem_mb": 1264.13232421875
+}

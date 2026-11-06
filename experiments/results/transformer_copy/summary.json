@@ -1,0 +1,14 @@
+{
+  "name": "transformer_copy",
+  "model": "transformer",
+  "task": "copy",
+  "params": 52864,
+  "device": "cpu",
+  "steps": 1500,
+  "final_train_loss": 2.5390179327899886e-08,
+  "final_val_loss": 2.2409947231238903e-08,
+  "final_val_metric": 1.0,
+  "train_time_s": 25.94221591949463,
+  "tokens_per_s": 122117.55579519957,
+  "peak_gpu_mem_mb": null
+}

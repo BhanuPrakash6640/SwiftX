@@ -1,0 +1,7 @@
+# Small Sift (Mamba-1) config for limited compute
+d_model: 128      # size of each token's vector
+n_layers: 4       # number of stacked Sift blocks
+d_state: 16       # size of the "notebook" per channel (N)
+d_conv: 4         # causal convolution kernel width
+expand: 2         # d_inner = expand * d_model
+vocab_size: 65    # set by the tokenizer (65 chars for Tiny Shakespeare)

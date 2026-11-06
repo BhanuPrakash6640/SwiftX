@@ -1,0 +1,21 @@
+name: transformer_adding_gpu
+model:
+  type: transformer
+  d_model: 64
+  n_layers: 1
+  n_heads: 4
+task:
+  name: adding
+  seq_len: 200
+train:
+  batch_size: 64
+  max_steps: 3000
+  lr: 0.001
+  min_lr: 0.0001
+  warmup_steps: 100
+  weight_decay: 0.1
+  grad_clip: 1.0
+  eval_every: 100
+  eval_batches: 4
+  seed: 0
+  amp: false

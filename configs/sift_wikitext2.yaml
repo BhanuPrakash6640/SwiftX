@@ -1,0 +1,23 @@
+name: sift_wikitext2
+model:
+  type: sift
+  d_model: 256
+  n_layers: 8
+  d_state: 16
+  d_conv: 4
+  expand: 2
+task:
+  name: wikitext2
+  seq_len: 512
+train:
+  batch_size: 16
+  max_steps: 10000
+  lr: 0.002
+  min_lr: 0.0002
+  warmup_steps: 100
+  weight_decay: 0.1
+  grad_clip: 1.0
+  eval_every: 100
+  eval_batches: 8
+  seed: 0
+  amp: true

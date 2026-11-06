@@ -1,0 +1,24 @@
+step   100 | train 0.4500 | val 0.1541 metric=0.070 | 57.4s
+step   200 | train 0.1739 | val 0.1608 metric=0.086 | 60.1s
+step   300 | train 0.1584 | val 0.0465 metric=0.113 | 57.4s
+step   400 | train 0.0257 | val 0.0073 metric=0.328 | 56.2s
+step   500 | train 0.0141 | val 0.0032 metric=0.512 | 58.5s
+step   600 | train 0.0079 | val 0.0033 metric=0.492 | 63.7s
+step   700 | train 0.0052 | val 0.0048 metric=0.316 | 65.6s
+step   800 | train 0.0038 | val 0.0033 metric=0.438 | 65.5s
+step   900 | train 0.0013 | val 0.0005 metric=0.961 | 67.4s
+step  1000 | train 0.0010 | val 0.0006 metric=0.949 | 69.4s
+step  1100 | train 0.0008 | val 0.0001 metric=0.996 | 67.4s
+step  1200 | train 0.0005 | val 0.0003 metric=1.000 | 65.4s
+step  1300 | train 0.0004 | val 0.0002 metric=1.000 | 100.4s
+step  1400 | train 0.0003 | val 0.0001 metric=0.992 | 71.0s
+step  1500 | train 0.0002 | val 0.0003 metric=0.996 | 64.8s
+step  1600 | train 0.0002 | val 0.0002 metric=0.996 | 68.5s
+step  1700 | train 0.0001 | val 0.0001 metric=1.000 | 69.8s
+step  1800 | train 0.0001 | val 0.0000 metric=1.000 | 69.4s
+step  1900 | train 0.0001 | val 0.0001 metric=1.000 | 385.4s
+step  2000 | train 0.0001 | val 0.0001 metric=1.000 | 761.7s
+  "steps": 2000,
+  "final_train_loss": 7.549923835540539e-05,
+  "final_val_loss": 7.811532123014331e-05,
+  "final_val_metric": 1.0,

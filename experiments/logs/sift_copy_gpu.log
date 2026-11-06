@@ -1,0 +1,45 @@
+[sift_copy_gpu] sift  params=66,112  device=cuda
+step   100 | train 2.1141 | val 1.9713 metric=0.229 | 6.3s
+step   200 | train 1.7631 | val 1.6106 metric=0.349 | 5.7s
+step   300 | train 1.4961 | val 1.3873 metric=0.431 | 5.5s
+step   400 | train 1.1826 | val 1.0528 metric=0.553 | 5.7s
+step   500 | train 0.8978 | val 0.7529 metric=0.694 | 7.2s
+step   600 | train 0.7202 | val 0.6654 metric=0.723 | 5.6s
+step   700 | train 0.5528 | val 0.4454 metric=0.826 | 5.7s
+step   800 | train 0.4283 | val 0.4020 metric=0.838 | 5.1s
+step   900 | train 0.3501 | val 0.2871 metric=0.890 | 6.1s
+step  1000 | train 0.2785 | val 0.2516 metric=0.911 | 6.5s
+step  1100 | train 0.2262 | val 0.1670 metric=0.931 | 5.9s
+step  1200 | train 0.1639 | val 0.1427 metric=0.939 | 6.1s
+step  1300 | train 0.1375 | val 0.1019 metric=0.959 | 5.7s
+step  1400 | train 0.1132 | val 0.0871 metric=0.963 | 5.9s
+step  1500 | train 0.1131 | val 0.1002 metric=0.956 | 6.9s
+step  1600 | train 0.0924 | val 0.1181 metric=0.953 | 5.6s
+step  1700 | train 0.0780 | val 0.0489 metric=0.979 | 6.0s
+step  1800 | train 0.0497 | val 0.0359 metric=0.989 | 5.5s
+step  1900 | train 0.0310 | val 0.0142 metric=0.996 | 6.1s
+step  2000 | train 0.0175 | val 0.0281 metric=0.990 | 6.4s
+step  2100 | train 0.0180 | val 0.0353 metric=0.987 | 6.1s
+step  2200 | train 0.0127 | val 0.0049 metric=0.999 | 6.1s
+step  2300 | train 0.0057 | val 0.0027 metric=1.000 | 5.4s
+step  2400 | train 0.0042 | val 0.0043 metric=0.999 | 5.8s
+step  2500 | train 0.0038 | val 0.0026 metric=1.000 | 6.8s
+step  2600 | train 0.0023 | val 0.0017 metric=1.000 | 5.8s
+step  2700 | train 0.0021 | val 0.0012 metric=1.000 | 5.7s
+step  2800 | train 0.0016 | val 0.0013 metric=1.000 | 5.5s
+step  2900 | train 0.0015 | val 0.0008 metric=1.000 | 5.6s
+step  3000 | train 0.0013 | val 0.0007 metric=1.000 | 5.8s
+{
+  "name": "sift_copy_gpu",
+  "model": "sift",
+  "task": "copy",
+  "params": 66112,
+  "device": "cuda",
+  "steps": 3000,
+  "final_train_loss": 0.0012567221545032225,
+  "final_val_loss": 0.000696919858455658,
+  "final_val_metric": 1.0,
+  "train_time_s": 173.3709635734558,
+  "tokens_per_s": 36545.91212625689,
+  "peak_gpu_mem_mb": 222.84619140625
+}

@@ -1,0 +1,28 @@
+[transformer_wikitext2_gpu] transformer  params=3,576,832  device=cuda
+step   200 | train 3.0502 | val 2.4908 | 9.4s
+step   400 | train 2.4755 | val 2.4596 | 65.5s
+step   600 | train 2.4481 | val 2.4289 | 52.2s
+step   800 | train 2.4009 | val 2.3442 | 38.2s
+step  1000 | train 2.2565 | val 2.1754 | 10.8s
+step  1200 | train 2.1128 | val 2.0459 | 13.2s
+step  1400 | train 2.0055 | val 1.9531 | 11.9s
+step  1600 | train 1.9298 | val 1.8827 | 12.1s
+step  1800 | train 1.8722 | val 1.8408 | 11.2s
+step  2000 | train 1.8328 | val 1.8080 | 10.5s
+{
+  "name": "transformer_wikitext2_gpu",
+  "model": "transformer",
+  "task": "wikitext2",
+  "params": 3576832,
+  "device": "cuda",
+  "steps": 2000,
+  "final_train_loss": 1.8327508634328842,
+  "final_val_loss": 1.8079645112156868,
+  "final_val_metric": null,
+  "final_retrieval_rate": null,
+  "train_time_s": 214.2869107723236,
+  "tokens_per_s": 38229.11987705991,
+  "peak_gpu_mem_mb": 275.36376953125,
+  "val_perplexity": 6.0980223348783085,
+  "val_bits_per_char": 2.6083414344341103
+}

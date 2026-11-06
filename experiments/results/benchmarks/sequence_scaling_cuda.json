@@ -1,0 +1,54 @@
+{
+  "hardware": {
+    "device": "cuda",
+    "torch": "2.11.0+cu128",
+    "threads": 8,
+    "platform": "Windows-11-10.0.26300-SP0",
+    "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU"
+  },
+  "train_step_ms_batch4": {
+    "sift": {
+      "128": 198.44239996746182,
+      "256": 317.4238000065088,
+      "512": 645.7802999648266,
+      "1024": 1340.0554000400007,
+      "2048": 2892.301900021266,
+      "4096": 89831.40110003296
+    },
+    "transformer": {
+      "128": 26.09100000699982,
+      "256": 34.184399992227554,
+      "512": 31.015499960631132,
+      "1024": 35.95109999878332,
+      "2048": 102.92289999779314,
+      "4096": 342.5283000105992
+    }
+  },
+  "scan_implementations": {
+    "shape": {
+      "b": 8,
+      "L": 256,
+      "D": 256,
+      "N": 16
+    },
+    "results": {
+      "reference (autograd loop)": {
+        "forward_ms": 130.93439996009693,
+        "fwd_bwd_ms": 736.8568999809213
+      },
+      "parallel (associative scan)": {
+        "forward_ms": 23.677099961787462,
+        "fwd_bwd_ms": 82.09779998287559
+      },
+      "sequential (custom backward)": {
+        "forward_ms": 69.6407999494113,
+        "fwd_bwd_ms": 269.1086000413634
+      },
+      "fused (chunked recompute)": {
+        "forward_ms": 270.8148999954574,
+        "fwd_bwd_ms": 1159.8956999951042
+      }
+    }
+  }
+}

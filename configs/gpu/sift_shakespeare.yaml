@@ -1,0 +1,24 @@
+name: sift_shakespeare_gpu
+model:
+  type: sift
+  d_model: 128
+  n_layers: 7
+  d_state: 16
+  d_conv: 4
+  expand: 2
+task:
+  name: shakespeare
+  seq_len: 256
+train:
+  batch_size: 16
+  max_steps: 5000
+  lr: 0.002
+  min_lr: 0.0002
+  warmup_steps: 100
+  weight_decay: 0.1
+  grad_clip: 1.0
+  eval_every: 250
+  eval_batches: 8
+  seed: 0
+  amp: true
+  ckpt_every: 250

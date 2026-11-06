@@ -1,0 +1,54 @@
+train-step memory L=  256 sift            275.0 MB
+train-step memory L=  512 sift            508.8 MB
+train-step memory L= 1024 sift           1024.3 MB
+train-step memory L= 2048 sift           2052.9 MB
+train-step memory L= 4096 sift           4112.0 MB
+train-step memory L=  256 transformer      35.4 MB
+train-step memory L=  512 transformer      68.2 MB
+train-step memory L= 1024 transformer     136.3 MB
+train-step memory L= 2048 transformer     269.1 MB
+train-step memory L= 4096 transformer     546.2 MB
+state sift         @256:140KiB  @512:140KiB  @1024:140KiB  @2048:140KiB  @4096:140KiB
+state transformer  @256:1024KiB  @512:2048KiB  @1024:4096KiB  @2048:8192KiB  @4096:16384KiB
+{
+  "hardware": {
+    "device": "cuda",
+    "torch": "2.11.0+cu128",
+    "threads": 8,
+    "platform": "Windows-11-10.0.26300-SP0",
+    "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU"
+  },
+  "inference_state_kib": {
+    "sift": {
+      "256": 140.0,
+      "512": 140.0,
+      "1024": 140.0,
+      "2048": 140.0,
+      "4096": 140.0
+    },
+    "transformer": {
+      "256": 1024.0,
+      "512": 2048.0,
+      "1024": 4096.0,
+      "2048": 8192.0,
+      "4096": 16384.0
+    }
+  },
+  "train_step_peak_mb_batch4": {
+    "sift": {
+      "256": 274.986328125,
+      "512": 508.7880859375,
+      "1024": 1024.2685546875,
+      "2048": 2052.8935546875,
+      "4096": 4112.0107421875
+    },
+    "transformer": {
+      "256": 35.3935546875,
+      "512": 68.1611328125,
+      "1024": 136.2900390625,
+      "2048": 269.1416015625,
+      "4096": 546.23095703125
+    }
+  }
+}

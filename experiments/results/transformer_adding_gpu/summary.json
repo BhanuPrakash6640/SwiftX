@@ -1,0 +1,14 @@
+{
+  "name": "transformer_adding_gpu",
+  "model": "transformer",
+  "task": "adding",
+  "params": 63169,
+  "device": "cuda",
+  "steps": 3000,
+  "final_train_loss": 7.241569126108515e-06,
+  "final_val_loss": 4.944789907312952e-06,
+  "final_val_metric": 1.0,
+  "train_time_s": 61.70051431655884,
+  "tokens_per_s": 622361.1006382555,
+  "peak_gpu_mem_mb": 86.69775390625
+}

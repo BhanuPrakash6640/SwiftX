@@ -1,0 +1,11 @@
+[pilot_mqar_hybrid] siftx  params=155,714  device=cpu
+step   100 | train 3.9540 | val 3.7008 metric=0.030 retrieve=1.00 | 84.9s
+step   200 | train 3.6885 | val 3.6271 metric=0.064 retrieve=1.00 | 84.1s
+step   300 | train 3.6081 | val 3.5824 metric=0.071 retrieve=1.00 | 86.1s
+step   400 | train 3.5730 | val 3.5586 metric=0.075 retrieve=1.00 | 85.2s
+step   500 | train 3.5549 | val 3.5531 metric=0.074 retrieve=1.00 | 90.4s
+step   600 | train 3.5466 | val 3.5420 metric=0.082 retrieve=1.00 | 87.3s
+step   700 | train 3.5300 | val 3.5092 metric=0.085 retrieve=1.00 | 94.9s
+step   800 | train 3.4788 | val 3.4365 metric=0.118 retrieve=1.00 | 89.8s
+  "params": 155714,
+  "steps": 800,

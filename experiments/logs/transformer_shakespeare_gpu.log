@@ -1,0 +1,38 @@
+[transformer_shakespeare_gpu] transformer  params=834,432  device=cuda
+step   250 | train 2.7036 | val 2.4699 | 4.3s
+step   500 | train 2.3343 | val 2.2869 | 4.0s
+step   750 | train 2.1250 | val 2.1016 | 4.1s
+step  1000 | train 1.9076 | val 1.9648 | 4.0s
+step  1250 | train 1.7495 | val 1.8634 | 4.1s
+step  1500 | train 1.6504 | val 1.8096 | 4.0s
+step  1750 | train 1.5737 | val 1.7552 | 4.1s
+step  2000 | train 1.5200 | val 1.7017 | 4.1s
+step  2250 | train 1.4823 | val 1.6854 | 4.0s
+step  2500 | train 1.4446 | val 1.6500 | 4.1s
+step  2750 | train 1.4166 | val 1.6249 | 4.0s
+step  3000 | train 1.3959 | val 1.6044 | 4.0s
+step  3250 | train 1.3713 | val 1.5999 | 4.0s
+step  3500 | train 1.3481 | val 1.5881 | 4.1s
+step  3750 | train 1.3302 | val 1.5769 | 4.0s
+step  4000 | train 1.3156 | val 1.5633 | 4.1s
+step  4250 | train 1.3090 | val 1.5545 | 4.1s
+step  4500 | train 1.2942 | val 1.5515 | 4.0s
+step  4750 | train 1.2837 | val 1.5515 | 4.1s
+step  5000 | train 1.2795 | val 1.5461 | 4.0s
+{
+  "name": "transformer_shakespeare_gpu",
+  "model": "transformer",
+  "task": "shakespeare",
+  "params": 834432,
+  "device": "cuda",
+  "steps": 5000,
+  "final_train_loss": 1.2795428900718688,
+  "final_val_loss": 1.5461031198501587,
+  "final_val_metric": null,
+  "final_retrieval_rate": null,
+  "train_time_s": 74.6002471446991,
+  "tokens_per_s": 274529.9216003369,
+  "peak_gpu_mem_mb": 115.556640625,
+  "val_perplexity": 4.693145874963869,
+  "val_bits_per_char": 2.2305553037107786
+}

@@ -1,0 +1,22 @@
+name: transformer_wikitext2_gpu
+model:
+  type: transformer
+  d_model: 256
+  n_layers: 4
+  n_heads: 8
+task:
+  name: wikitext2
+  seq_len: 512
+train:
+  batch_size: 8
+  max_steps: 2000
+  lr: 0.001
+  min_lr: 0.0001
+  warmup_steps: 100
+  weight_decay: 0.1
+  grad_clip: 1.0
+  eval_every: 200
+  eval_batches: 16
+  seed: 0
+  amp: true
+  ckpt_every: 250

@@ -1,0 +1,14 @@
+{
+  "name": "transformer_adding",
+  "model": "transformer",
+  "task": "adding",
+  "params": 56769,
+  "device": "cpu",
+  "steps": 800,
+  "final_train_loss": 0.00022290343440545257,
+  "final_val_loss": 0.0002687230153242126,
+  "final_val_metric": 0.9921875,
+  "train_time_s": 37.086682081222534,
+  "tokens_per_s": 138054.94891095482,
+  "peak_gpu_mem_mb": null
+}

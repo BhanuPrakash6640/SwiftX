@@ -1,0 +1,29 @@
+name: mqar_sift_s0
+model:
+  type: siftx
+  variant: sift
+  d_model: 128
+  n_layers: 4
+  d_state: 16
+  gate_warmup: 1800
+  gate_anneal: 750
+task:
+  name: mqar
+  seq_len: 256
+  n_pairs: 32
+  n_keys: 64
+  n_values: 64
+  n_noise: 127
+train:
+  weight_decay: 0.1
+  grad_clip: 1.0
+  warmup_steps: 100
+  amp: true
+  ckpt_every: 500
+  batch_size: 32
+  max_steps: 3000
+  lr: 0.003
+  min_lr: 0.0003
+  eval_every: 250
+  eval_batches: 8
+  seed: 0

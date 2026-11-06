@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.pt
+experiments/results/*/ckpt.pt
+experiments/results/**/ckpt.pt
+data/cache/
+*.log.tmp
+.DS_Store

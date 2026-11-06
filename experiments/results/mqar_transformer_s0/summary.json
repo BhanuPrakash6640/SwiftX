@@ -1,0 +1,15 @@
+{
+  "name": "mqar_transformer_s0",
+  "model": "transformer",
+  "task": "mqar",
+  "params": 660608,
+  "device": "cuda",
+  "steps": 1000,
+  "final_train_loss": 4.102382934570312,
+  "final_val_loss": 4.095394611358643,
+  "final_val_metric": 0.0391845703125,
+  "final_retrieval_rate": null,
+  "train_time_s": 39.327414989471436,
+  "tokens_per_s": 208302.52896594213,
+  "peak_gpu_mem_mb": 164.9580078125
+}

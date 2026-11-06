@@ -1,0 +1,6 @@
+[mqar_sift_s0] siftx  params=499,328  device=cuda
+step   250 | train 4.3129 | val 4.1690 metric=0.015 | 325.4s
+step   500 | train 4.1851 | val 4.1645 metric=0.015 | 326.4s
+step   750 | train 4.1629 | val 4.1646 metric=0.016 | 319.2s
+step  1000 | train 4.1520 | val 4.1469 metric=0.021 | 331.9s
+step  1250 | train 4.1356 | val 4.1223 metric=0.022 | 321.6s

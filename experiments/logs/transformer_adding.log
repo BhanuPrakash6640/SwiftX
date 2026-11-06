@@ -1,0 +1,23 @@
+[transformer_adding] transformer  params=56,769  device=cpu
+step   100 | train 0.2226 | val 0.0835 metric=0.141 | 5.0s
+step   200 | train 0.0297 | val 0.0102 metric=0.297 | 4.6s
+step   300 | train 0.0138 | val 0.0073 metric=0.285 | 4.6s
+step   400 | train 0.0043 | val 0.0017 metric=0.688 | 4.7s
+step   500 | train 0.0012 | val 0.0005 metric=0.926 | 4.7s
+step   600 | train 0.0006 | val 0.0003 metric=0.969 | 4.6s
+step   700 | train 0.0003 | val 0.0003 metric=0.984 | 4.6s
+step   800 | train 0.0002 | val 0.0003 metric=0.992 | 5.1s
+{
+  "name": "transformer_adding",
+  "model": "transformer",
+  "task": "adding",
+  "params": 56769,
+  "device": "cpu",
+  "steps": 800,
+  "final_train_loss": 0.00022290343440545257,
+  "final_val_loss": 0.0002687230153242126,
+  "final_val_metric": 0.9921875,
+  "train_time_s": 37.086682081222534,
+  "tokens_per_s": 138054.94891095482,
+  "peak_gpu_mem_mb": null
+}

@@ -1,0 +1,7 @@
+step   100 | train 0.4500 | val 0.1541 metric=0.070 | 57.4s
+step   200 | train 0.1739 | val 0.1608 metric=0.086 | 60.1s
+step   300 | train 0.1584 | val 0.0465 metric=0.113 | 57.4s
+step   400 | train 0.0257 | val 0.0073 metric=0.328 | 56.2s
+step   500 | train 0.0141 | val 0.0032 metric=0.512 | 58.5s
+step   600 | train 0.0079 | val 0.0033 metric=0.492 | 63.7s
+step   700 | train 0.0052 | val 0.0048 metric=0.316 | 65.6s

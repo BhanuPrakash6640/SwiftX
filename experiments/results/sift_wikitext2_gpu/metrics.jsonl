@@ -1,0 +1,11 @@
+{"step": 200, "train_loss": 2.348083840608597, "val_loss": 1.6365600004792213, "val_metric": null, "lr": 0.0019879688964159433, "retrieval_rate": null, "train_time_s": 491.98132276535034}
+{"step": 400, "train_loss": 1.5610702615976333, "val_loss": 1.5033912658691406, "val_metric": null, "lr": 0.0018922335619459372, "retrieval_rate": null, "train_time_s": 983.244127035141}
+{"step": 600, "train_loss": 1.4588610738515855, "val_loss": 1.4289664179086685, "val_metric": null, "lr": 0.001710647428268807, "retrieval_rate": null, "train_time_s": 1474.4700853824615}
+{"step": 800, "train_loss": 1.3964787828922272, "val_loss": 1.3874925523996353, "val_metric": null, "lr": 0.0014628881705676413, "retrieval_rate": null, "train_time_s": 1965.6626019477844}
+{"step": 800, "train_loss": 1.3711443114280701, "val_loss": 1.385608710348606, "val_metric": null, "lr": 0.0014628881705676413, "retrieval_rate": null, "train_time_s": 165.82876062393188}
+{"step": 1000, "train_loss": 1.3411465364694595, "val_loss": 1.3494495004415512, "val_metric": null, "lr": 0.0011758043487953447, "retrieval_rate": null, "train_time_s": 721.8554151058197}
+{"step": 1200, "train_loss": 1.2862311452627182, "val_loss": 1.3209658786654472, "val_metric": null, "lr": 0.0008805059496054103, "retrieval_rate": null, "train_time_s": 1290.7868027687073}
+{"step": 1400, "train_loss": 1.2478825056552887, "val_loss": 1.2997229844331741, "val_metric": null, "lr": 0.0006089931365768334, "retrieval_rate": null, "train_time_s": 1852.3927490711212}
+{"step": 1600, "train_loss": 1.2205745893716813, "val_loss": 1.2793510556221008, "val_metric": null, "lr": 0.00039068853595663035, "retrieval_rate": null, "train_time_s": 2412.7678532600403}
+{"step": 1800, "train_loss": 1.2139597940444946, "val_loss": 1.2604237422347069, "val_metric": null, "lr": 0.00024924883856688903, "retrieval_rate": null, "train_time_s": 2974.9043934345245}
+{"step": 2000, "train_loss": 1.2074346208572388, "val_loss": 1.251917541027069, "val_metric": null, "lr": 0.00020000123028281682, "retrieval_rate": null, "train_time_s": 3536.382748365402}

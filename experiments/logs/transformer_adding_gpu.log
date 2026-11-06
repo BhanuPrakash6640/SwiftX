@@ -1,0 +1,45 @@
+[transformer_adding_gpu] transformer  params=63,169  device=cuda
+step   100 | train 0.1780 | val 0.0898 metric=0.051 | 2.5s
+step   200 | train 0.0166 | val 0.0012 metric=0.723 | 3.2s
+step   300 | train 0.0011 | val 0.0006 metric=0.898 | 2.5s
+step   400 | train 0.0005 | val 0.0007 metric=0.836 | 2.4s
+step   500 | train 0.0004 | val 0.0003 metric=0.992 | 2.2s
+step   600 | train 0.0003 | val 0.0006 metric=0.934 | 2.6s
+step   700 | train 0.0003 | val 0.0001 metric=1.000 | 1.7s
+step   800 | train 0.0003 | val 0.0001 metric=1.000 | 2.6s
+step   900 | train 0.0003 | val 0.0001 metric=0.996 | 2.2s
+step  1000 | train 0.0001 | val 0.0001 metric=1.000 | 1.3s
+step  1100 | train 0.0002 | val 0.0001 metric=1.000 | 1.3s
+step  1200 | train 0.0002 | val 0.0002 metric=1.000 | 1.4s
+step  1300 | train 0.0002 | val 0.0001 metric=1.000 | 2.2s
+step  1400 | train 0.0001 | val 0.0000 metric=1.000 | 3.3s
+step  1500 | train 0.0001 | val 0.0002 metric=0.996 | 1.9s
+step  1600 | train 0.0001 | val 0.0001 metric=1.000 | 1.3s
+step  1700 | train 0.0001 | val 0.0001 metric=1.000 | 1.2s
+step  1800 | train 0.0001 | val 0.0001 metric=1.000 | 1.9s
+step  1900 | train 0.0000 | val 0.0000 metric=1.000 | 3.1s
+step  2000 | train 0.0000 | val 0.0000 metric=1.000 | 3.3s
+step  2100 | train 0.0000 | val 0.0000 metric=1.000 | 3.2s
+step  2200 | train 0.0000 | val 0.0000 metric=1.000 | 3.6s
+step  2300 | train 0.0000 | val 0.0000 metric=1.000 | 1.5s
+step  2400 | train 0.0000 | val 0.0000 metric=1.000 | 1.2s
+step  2500 | train 0.0000 | val 0.0000 metric=1.000 | 1.3s
+step  2600 | train 0.0000 | val 0.0000 metric=1.000 | 1.2s
+step  2700 | train 0.0000 | val 0.0000 metric=1.000 | 2.8s
+step  2800 | train 0.0000 | val 0.0000 metric=1.000 | 3.5s
+step  2900 | train 0.0000 | val 0.0000 metric=1.000 | 3.4s
+step  3000 | train 0.0000 | val 0.0000 metric=1.000 | 2.6s
+{
+  "name": "transformer_adding_gpu",
+  "model": "transformer",
+  "task": "adding",
+  "params": 63169,
+  "device": "cuda",
+  "steps": 3000,
+  "final_train_loss": 7.241569126108515e-06,
+  "final_val_loss": 4.944789907312952e-06,
+  "final_val_metric": 1.0,
+  "train_time_s": 61.70051431655884,
+  "tokens_per_s": 622361.1006382555,
+  "peak_gpu_mem_mb": 86.69775390625
+}

@@ -1,0 +1,17 @@
+{
+  "name": "transformer_shakespeare_gpu",
+  "model": "transformer",
+  "task": "shakespeare",
+  "params": 834432,
+  "device": "cuda",
+  "steps": 5000,
+  "final_train_loss": 1.2795428900718688,
+  "final_val_loss": 1.5461031198501587,
+  "final_val_metric": null,
+  "final_retrieval_rate": null,
+  "train_time_s": 74.6002471446991,
+  "tokens_per_s": 274529.9216003369,
+  "peak_gpu_mem_mb": 115.556640625,
+  "val_perplexity": 4.693145874963869,
+  "val_bits_per_char": 2.2305553037107786
+}

@@ -1,0 +1,22 @@
+name: lm_transformer
+model:
+  type: transformer
+  d_model: 128
+  n_layers: 4
+  n_heads: 4
+task:
+  name: shakespeare
+  seq_len: 256
+train:
+  weight_decay: 0.1
+  grad_clip: 1.0
+  warmup_steps: 100
+  amp: true
+  ckpt_every: 500
+  batch_size: 16
+  max_steps: 3000
+  lr: 0.001
+  min_lr: 0.0001
+  eval_every: 250
+  eval_batches: 8
+  seed: 0
