@@ -72,7 +72,7 @@ All benchmarks measured directly on an **NVIDIA GeForce RTX 3050 Laptop GPU (4 G
 ### 2. Inference State Memory vs Sequence Length
 
 <p align="center">
-  <img src="assets/memory_slider_screenshot.png" width="450" alt="Interactive Memory Scaling Comparison at 512 words">
+  <img src="assets/memory_slider_measured.png" width="450" alt="Interactive Memory Scaling Comparison at 512 words">
 </p>
 
 > **Figure 4:** Interactive Memory Scaling from [`frontend/index.html`](frontend/index.html): At 512 context tokens, Transformer requires 2.0 MB KV cache, while Sift stays strictly constant at 140 KiB ($O(1)$ constant memory).
@@ -112,7 +112,7 @@ While continuous selective state spaces excel at smooth sequential compression, 
 
 > **Honest Scientific Analysis:**  
 > The MQAR evaluation uses $n_{\text{values}} = 64$, corresponding to a **uniform random guessing baseline of $1/64 \approx 1.56\%$ accuracy** and theoretical cross-entropy loss of $\ln(64) \approx 4.159$.  
-> At 1,000 steps on 256-token sequences, **all architectures remain hovering near the chance floor** (validation loss 4.10–4.16, accuracy 1.8%–3.9%). Notably, the sliding-window baseline (`mqar_siftx_recent_s0`) yields 4.1589 val loss—matching pure chance entropy $\ln(64)$ almost to the fourth decimal place. The small variation between models falls within the statistical margin of error ($\pm 0.2\%$ on ~8,000 test questions), indicating that no model has broken out of the chance regime within this 1,000-step budget. (Original research configs specify 3,000 steps; full convergence dynamics require complete training runs).
+> At 1,000 steps on 256-token sequences, **all architectures remain hovering near the chance floor** (validation loss 4.10–4.16, accuracy 1.8%–3.9%). Notably, the sliding-window baseline (`mqar_siftx_recent_s0`) yields 4.1589 val loss (closely matching theoretical chance entropy $\ln(64) \approx 4.1589$). Because every tested model—including the full-attention Transformer—remains at chance at 1,000 steps, differences across models fall within statistical noise ($\pm 0.2\%$ on ~8,000 test questions), and no architecture has begun learning the task within this early 1,000-step budget. (Original research configs specify 3,000 steps; full convergence dynamics require complete training runs).
 
 ### Critical Failure Modes & Fixes Discovered During SiftX Research
 

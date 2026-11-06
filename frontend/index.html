@@ -153,9 +153,9 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
     <!-- Hero Stat Grid -->
     <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:14px;margin-top:10px;">
       <div style="background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;display:grid;gap:4px;">
-        <span class="label" style="color:var(--siftx);">Inference Efficiency</span>
-        <div style="font-family:var(--font-display);font-size:var(--step-2);font-weight:800;color:var(--siftx);">95× Leaner Memory</div>
-        <p class="note">172 KiB constant state vs 16.4 MB Transformer KV cache at 4,096 tokens.</p>
+        <span class="label" style="color:var(--sift);">Inference Efficiency</span>
+        <div style="font-family:var(--font-display);font-size:var(--step-2);font-weight:800;color:var(--sift);">117× Leaner State</div>
+        <p class="note">140 KiB constant state vs 16.4 MB Transformer KV cache at 4,096 tokens (empirically measured).</p>
       </div>
       <div style="background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;display:grid;gap:4px;">
         <span class="label" style="color:var(--sift);">Language Modeling</span>
@@ -240,11 +240,6 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
           <span class="sift-ink">Mamba (Sift)</span>
           <div class="track"><div class="fill" id="m-sf" style="background:var(--sift);box-shadow:0 0 10px rgba(42,120,214,0.6);"></div></div>
           <span class="val sift-ink" id="m-sf-v"></span>
-        </div>
-        <div class="membar">
-          <span class="siftx-ink">SiftX (Ours)</span>
-          <div class="track"><div class="fill" id="m-sx" style="background:var(--siftx);box-shadow:0 0 10px rgba(139,92,246,0.6);"></div></div>
-          <span class="val siftx-ink" id="m-sx-v"></span>
         </div>
         <p class="note" id="m-note" style="padding-top:6px;font-size:0.92rem;"></p>
       </div>
@@ -687,30 +682,28 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
   // Memory calculator: real numbers for this project's two models (float32).
   // Transformer KV cache: layers(4) x 2 (K and V) x d_model(128) x 4 bytes = 4 KiB per word.
   // Sift state: blocks(7) x d_inner(256) x (d_state 16 + conv window 4) x 4 bytes = 140 KiB, constant.
-  const KV_PER = 4 * 2 * 128 * 4, SIFT_STATE = 7 * 256 * (16 + 4) * 4, SIFTX_STATE = SIFT_STATE + (64 * 128 * 4);
+  const KV_PER = 4 * 2 * 128 * 4, SIFT_STATE = 7 * 256 * (16 + 4) * 4;
   const ctx = document.getElementById("ctx");
   function bytes(b) { return b >= 1048576 ? (b / 1048576).toFixed(1) + " MB" : Math.round(b / 1024) + " KB"; }
   function mem() {
     const L = 2 ** +ctx.value;
     const tf = KV_PER * L;
-    const mx = Math.max(tf, SIFTX_STATE);
+    const mx = Math.max(tf, SIFT_STATE);
 
     document.getElementById("ctx-v").textContent = L.toLocaleString("en-US") + " words";
     document.getElementById("m-tf").style.width = Math.max(2, (tf / mx * 100)) + "%";
     document.getElementById("m-sf").style.width = Math.max(3, (SIFT_STATE / mx * 100)) + "%";
-    document.getElementById("m-sx").style.width = Math.max(4, (SIFTX_STATE / mx * 100)) + "%";
 
     document.getElementById("m-tf-v").innerHTML = `${bytes(tf)} <span style="font-size:0.75rem;opacity:0.75;font-weight:400;">(grows O(L))</span>`;
     document.getElementById("m-sf-v").innerHTML = `140 KB <span style="font-size:0.75rem;opacity:0.75;font-weight:400;">(fixed O(1))</span>`;
-    document.getElementById("m-sx-v").innerHTML = `172 KB <span style="font-size:0.75rem;opacity:0.75;font-weight:400;">(fixed O(1))</span>`;
 
-    const ratio = (tf / SIFTX_STATE).toFixed(0);
+    const ratio = (tf / SIFT_STATE).toFixed(0);
     if (L <= 32) {
       document.getElementById("m-note").innerHTML =
-        `At short text (${L} words), Transformer cache is smaller (${bytes(tf)}). Mamba and SiftX have fixed-size memory, costing the same from word 1.`;
+        `At short text (${L} words), Transformer cache is smaller (${bytes(tf)}). Mamba has fixed-size state, costing the same from word 1.`;
     } else {
       document.getElementById("m-note").innerHTML =
-        `<span style="color:var(--siftx);font-weight:700;">★ Why 140 KB & 172 KB do not change:</span> They have <strong>constant O(1) state</strong>! While Transformer expands to <strong>${bytes(tf)}</strong>, SiftX stays permanently locked at <strong>172 KB</strong> (${ratio}× leaner right now).`;
+        `<span style="color:var(--sift);font-weight:700;">★ Why 140 KB does not change:</span> Selective SSMs maintain <strong>strictly constant O(1) state</strong>! While Transformer expands to <strong>${bytes(tf)}</strong>, Mamba remains locked at <strong>140 KB</strong> (${ratio}× leaner right now).`;
     }
   }
   ctx.addEventListener("input", mem); mem();
