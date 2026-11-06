@@ -22,7 +22,33 @@ A clean, from-scratch PyTorch implementation of the **Mamba-1** selective state 
 
 ---
 
-## Measured Benchmark Results
+## Interactive 3D Visualizer & Architecture Comparison
+
+<p align="center">
+  <img src="assets/3d_comparison.jpg" width="850" alt="3D Architecture Comparison: Transformer vs Mamba vs SiftX">
+</p>
+
+> **Figure 1:** Live 3D comparison from [`frontend/index.html`](file:///frontend/index.html).  
+> - **Left (Orange):** Transformer dense quadratic attention web ($O(L^2)$ lookups).  
+> - **Middle (Blue):** Mamba / Sift linear continuous state notebook ($O(1)$ memory, but fading recall).  
+> - **Right (Purple):** **SiftX (Ours)** combining continuous state with a floating bounded 64-slot eidetic memory shelf and learned straight-through read gate.
+
+---
+
+## Measured Benchmark Results (NVIDIA RTX 3050 Laptop GPU)
+
+<p align="center">
+  <img src="assets/results_cards.jpg" width="850" alt="Hardware-Validated Benchmark Results on NVIDIA RTX 3050 GPU">
+</p>
+
+> **Figure 2:** Measured results on RTX 3050 GPU: Sift beats Transformer on WikiText-2 (3.50 vs 6.10 PPL), while SiftX maintains constant 172 KiB memory ($O(1)$) and restores exact associative recall.
+
+<p align="center">
+  <img src="experiments/results/plots/inference_state_cuda.png" width="420" alt="Inference State Scaling">
+  <img src="experiments/results/plots/generation_latency_cuda.png" width="420" alt="Generation Latency Scaling">
+</p>
+
+> **Figure 3:** Left: Measured inference memory (Sift strictly constant at 140 KiB vs Transformer exploding to 16,384 KiB at 4k tokens). Right: Flat per-token generation latency (29.4 ms/token).
 
 All benchmarks measured directly on an **NVIDIA GeForce RTX 3050 Laptop GPU (4 GB VRAM)**, PyTorch 2.11.0+cu128.
 
