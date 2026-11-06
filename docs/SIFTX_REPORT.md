@@ -179,3 +179,4 @@ A central contribution of this work is identifying and characterizing three subt
 ## 7. Conclusions & Outlook
 
 SiftX demonstrates that the architectural divide between **fading memory (SSMs)** and **eidetic memory (Attention)** can be bridged with bounded, gated associative slots. By detaching gating gradients and enforcing a staged curriculum, selective SSMs can achieve targeted associative retrieval while preserving the constant-memory, constant-latency guarantees essential for edge computing.
+
