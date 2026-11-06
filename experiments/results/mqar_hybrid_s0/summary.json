@@ -1,0 +1,15 @@
+{
+  "name": "mqar_hybrid_s0",
+  "model": "siftx",
+  "task": "mqar",
+  "params": 565378,
+  "device": "cuda",
+  "steps": 1000,
+  "final_train_loss": 4.129069793701172,
+  "final_val_loss": 4.130501925945282,
+  "final_val_metric": 0.0316162109375,
+  "final_retrieval_rate": 1.0,
+  "train_time_s": 1222.7042000293732,
+  "tokens_per_s": 6699.903377941454,
+  "peak_gpu_mem_mb": 1712.6982421875
+}
