@@ -25,7 +25,7 @@ A clean, from-scratch PyTorch implementation of the **Mamba-1** selective state 
 ## Interactive 3D Visualizer & Architecture Comparison
 
 <p align="center">
-  <img src="assets/3d_comparison.jpg" width="850" alt="3D Architecture Comparison: Transformer vs Mamba vs SiftX">
+  <img src="assets/3d_architecture_siftx.png" width="850" alt="3D Architecture Comparison: Transformer vs Mamba vs SiftX">
 </p>
 
 > **Figure 1:** Live 3D comparison from [`frontend/index.html`](file:///frontend/index.html).  
