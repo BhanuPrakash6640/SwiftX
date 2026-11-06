@@ -208,19 +208,20 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
   <!-- 2. Compare -->
   <section aria-labelledby="s2">
     <div class="prose" style="display:grid;gap:12px">
-      <span class="label">Part 2 · Two ways to read</span>
-      <h2 id="s2">A Transformer looks back at everything. Sift checks its notebook.</h2>
-      <p>The Transformer (the design behind ChatGPT) compares each new word with <em>every</em> word before it. That's powerful, but the work and memory keep growing as the text gets longer. Sift does one notebook update per word, no matter how much it has already read.</p>
+      <span class="label">Part 2 · Three architectural paradigms</span>
+      <h2 id="s2">Transformer looks back at everything. Mamba updates a notebook. SiftX adds an eidetic memory shelf.</h2>
+      <p>The <strong>Transformer</strong> compares each new word with <em>every</em> word before it (quadratic compute &amp; memory). <strong>Mamba (Sift)</strong> does one continuous notebook update per word (linear speed, but fading memory). <strong>SiftX (Ours)</strong> unites both: the continuous linear stream of Mamba with a bounded 64-slot photographic memory shelf and straight-through read gate.</p>
     </div>
     <div class="panel">
-      <div class="stage" id="stage2" role="img" aria-label="3D view: on the left, the newest Transformer word draws a line to every previous word; on the right, every Sift word feeds a single notebook box."><span class="hint">drag to rotate</span></div>
+      <div class="stage" id="stage2" role="img" aria-label="3D view comparing Transformer (dense attention lines), Mamba (single notebook cube), and SiftX (notebook cube plus floating bounded eidetic memory shelf)."><span class="hint">drag to rotate</span></div>
       <div class="slider-row">
         <div class="top"><label for="n-words" class="label">Words read so far</label><span class="label" id="n-words-v">12</span></div>
         <input id="n-words" type="range" min="1" max="40" value="12">
       </div>
-      <div class="compare-grid">
-        <div><span class="label tf-ink">Transformer</span><span class="big tf-ink" id="tf-look">12 lookups</span><span class="note">for the newest word, and <span id="tf-total">78</span> in total so far</span></div>
-        <div><span class="label sift-ink">Mamba (Sift)</span><span class="big sift-ink" id="sf-look">1 update</span><span class="note">for the newest word, and <span id="sf-total">12</span> in total so far</span></div>
+      <div class="compare-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+        <div><span class="label tf-ink">Transformer</span><span class="big tf-ink" id="tf-look">12 lookups</span><span class="note">for newest word · <span id="tf-total">78</span> lookups total</span></div>
+        <div><span class="label sift-ink">Mamba (Sift)</span><span class="big sift-ink" id="sf-look">1 update</span><span class="note">for newest word · <span id="sf-total">12</span> updates total</span></div>
+        <div><span class="label siftx-ink">SiftX (Ours)</span><span class="big siftx-ink" id="sx-look">1 update + gate</span><span class="note">for newest word · <span id="sx-total">12</span> + 64 slots</span></div>
       </div>
     </div>
 
@@ -529,46 +530,143 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
   colorize1();
 
   // ---------- Part 2: compare ----------
-  const S2 = makeStage(document.getElementById("stage2"), [0, 4.5, 15.5]);
-  const tfG = new THREE.Group(), sfG = new THREE.Group(); tfG.position.set(-5.2, 0, 0); sfG.position.set(5.2, 0, 0);
-  S2.pivot.add(tfG, sfG);
+  const S2 = makeStage(document.getElementById("stage2"), [0, 4.8, 19.5]);
+  const tfG = new THREE.Group(), sfG = new THREE.Group(), sxG = new THREE.Group();
+  tfG.position.set(-7.2, 0, 0);
+  sfG.position.set(0, 0, 0);
+  sxG.position.set(7.2, 0, 0);
+  S2.pivot.add(tfG, sfG, sxG);
+
   const dotGeo = new THREE.SphereGeometry(0.17, 16, 12);
-  const tfMat = new THREE.MeshStandardMaterial({ roughness: 0.5 }), sfMat = new THREE.MeshStandardMaterial({ roughness: 0.5 });
-  const lineTf = new THREE.LineBasicMaterial({ transparent: true, opacity: 0.55 }), lineSf = new THREE.LineBasicMaterial({ transparent: true, opacity: 0.55 });
+  const tfMat = new THREE.MeshStandardMaterial({ roughness: 0.5 });
+  const sfMat = new THREE.MeshStandardMaterial({ roughness: 0.5 });
+  const sxMat = new THREE.MeshStandardMaterial({ roughness: 0.5 });
+
+  const lineTf = new THREE.LineBasicMaterial({ transparent: true, opacity: 0.55 });
+  const lineSf = new THREE.LineBasicMaterial({ transparent: true, opacity: 0.55 });
+  const lineSx = new THREE.LineBasicMaterial({ transparent: true, opacity: 0.55 });
+  const lineSxShelf = new THREE.LineBasicMaterial({ transparent: true, opacity: 0.85 });
+
+  // Mamba (Sift) notebook box
   const box = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.6, 1.6), new THREE.MeshStandardMaterial({ roughness: 0.4, transparent: true, opacity: 0.9 }));
-  box.position.set(0, 2.4, 0); sfG.add(box);
-  const lblTf = textSprite("Transformer", "#888", 0.75), lblSf = textSprite("Sift", "#888", 0.75);
-  lblTf.position.set(0, -2.9, 0); lblSf.position.set(0, -2.9, 0); tfG.add(lblTf); sfG.add(lblSf);
+  box.position.set(0, 2.4, 0);
+  sfG.add(box);
+
+  // SiftX (Ours) continuous state box + floating eidetic memory shelf
+  const boxX = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.6, 1.6), new THREE.MeshStandardMaterial({ roughness: 0.4, transparent: true, opacity: 0.9 }));
+  boxX.position.set(0, 2.0, 0);
+  sxG.add(boxX);
+
+  const shelfPlate = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.1, 1.4), new THREE.MeshStandardMaterial({ roughness: 0.3, transparent: true, opacity: 0.85 }));
+  shelfPlate.position.set(0, 3.6, 0);
+  sxG.add(shelfPlate);
+
+  const slotGeo = new THREE.BoxGeometry(0.35, 0.35, 0.35);
+  const slotMat = new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.1 });
+  for (let s = 0; s < 4; s++) {
+    const sm = new THREE.Mesh(slotGeo, slotMat);
+    sm.position.set((s - 1.5) * 0.58, 3.85, 0);
+    sxG.add(sm);
+  }
+
+  const gateRing = new THREE.Mesh(new THREE.TorusGeometry(0.85, 0.05, 12, 32), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.5 }));
+  gateRing.rotation.x = Math.PI / 2;
+  gateRing.position.set(0, 4.4, 0);
+  sxG.add(gateRing);
+
+  const lblTf = textSprite("Transformer", "#d9622b", 0.72);
+  const lblSf = textSprite("Mamba (Sift)", "#2a78d6", 0.72);
+  const lblSx = textSprite("SiftX (Ours)", "#8b5cf6", 0.72);
+  lblTf.position.set(0, -2.9, 0);
+  lblSf.position.set(0, -2.9, 0);
+  lblSx.position.set(0, -2.9, 0);
+  tfG.add(lblTf);
+  sfG.add(lblSf);
+  sxG.add(lblSx);
+
   let dyn = [];
-  function pos(i, n) { const per = 8, r = Math.floor(i / per), c = i % per; return new THREE.Vector3((c - (per - 1) / 2) * 0.95, -1.6 - 0 * r, (r - (Math.ceil(n / per) - 1) / 2) * 0.95); }
+  function pos(i, n) {
+    const per = 8, r = Math.floor(i / per), c = i % per;
+    return new THREE.Vector3((c - (per - 1) / 2) * 0.95, -1.6 - 0 * r, (r - (Math.ceil(n / per) - 1) / 2) * 0.95);
+  }
   function buildCompare(n) {
-    dyn.forEach(o => o.parent.remove(o)); dyn = [];
+    dyn.forEach(o => o.parent && o.parent.remove(o));
+    dyn = [];
     for (let i = 0; i < n; i++) {
       const p = pos(i, n);
       const a = new THREE.Mesh(dotGeo, tfMat); a.position.copy(p); tfG.add(a); dyn.push(a);
       const b = new THREE.Mesh(dotGeo, sfMat); b.position.copy(p); sfG.add(b); dyn.push(b);
+      const c = new THREE.Mesh(dotGeo, sxMat); c.position.copy(p); sxG.add(c); dyn.push(c);
     }
-    // Transformer: every word attended by every later word (the full triangle of lookups)
+    // Transformer: every word attended by every later word (quadratic triangle)
     const tfPts = [];
     for (let j = 1; j < n; j++) for (let i = 0; i < j; i++) {
-      const pj = pos(j, n), pi = pos(i, n), mid = pj.clone().add(pi).multiplyScalar(0.5); mid.y += 0.4 + pj.distanceTo(pi) * 0.35;
+      const pj = pos(j, n), pi = pos(i, n), mid = pj.clone().add(pi).multiplyScalar(0.5);
+      mid.y += 0.4 + pj.distanceTo(pi) * 0.35;
       const curve = new THREE.QuadraticBezierCurve3(pj, mid, pi).getPoints(10);
       for (let k = 0; k < curve.length - 1; k++) tfPts.push(curve[k], curve[k + 1]);
     }
-    if (tfPts.length) { const ls = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(tfPts), lineTf); tfG.add(ls); dyn.push(ls); }
-    // Sift: each word sends one update into the notebook box
+    if (tfPts.length) {
+      const ls = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(tfPts), lineTf);
+      tfG.add(ls); dyn.push(ls);
+    }
+    // Mamba (Sift): each word sends one ray to the box
     const sfPts = [];
-    for (let i = 0; i < n; i++) { const p = pos(i, n); sfPts.push(p, new THREE.Vector3(p.x * 0.25, 1.6, p.z * 0.25)); }
-    const ls2 = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(sfPts), lineSf); sfG.add(ls2); dyn.push(ls2);
+    for (let i = 0; i < n; i++) {
+      const p = pos(i, n);
+      sfPts.push(p, new THREE.Vector3(p.x * 0.25, 2.4, p.z * 0.25));
+    }
+    const ls2 = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(sfPts), lineSf);
+    sfG.add(ls2); dyn.push(ls2);
+
+    // SiftX: each word sends one ray to the box, and key memory tokens send arcs to the shelf!
+    const sxPts = [];
+    for (let i = 0; i < n; i++) {
+      const p = pos(i, n);
+      sxPts.push(p, new THREE.Vector3(p.x * 0.25, 2.0, p.z * 0.25));
+    }
+    const ls3 = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(sxPts), lineSx);
+    sxG.add(ls3); dyn.push(ls3);
+
+    // SiftX selective memory arcs to shelf
+    const shelfPts = [];
+    for (let i = 0; i < n; i++) {
+      if (i % 3 === 1) {
+        const p = pos(i, n);
+        const slotIdx = (Math.floor(i / 3)) % 4;
+        const target = new THREE.Vector3((slotIdx - 1.5) * 0.58, 3.85, 0);
+        const mid = p.clone().add(target).multiplyScalar(0.5);
+        mid.y += 0.7;
+        const curve = new THREE.QuadraticBezierCurve3(p, mid, target).getPoints(10);
+        for (let k = 0; k < curve.length - 1; k++) shelfPts.push(curve[k], curve[k + 1]);
+      }
+    }
+    if (shelfPts.length) {
+      const lsShelf = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(shelfPts), lineSxShelf);
+      sxG.add(lsShelf); dyn.push(lsShelf);
+    }
+
     const fmt = x => x.toLocaleString("en-US");
     document.getElementById("n-words-v").textContent = n;
     document.getElementById("tf-look").textContent = `${fmt(n)} lookup${n === 1 ? "" : "s"}`;
     document.getElementById("tf-total").textContent = fmt(n * (n + 1) / 2);
     document.getElementById("sf-total").textContent = fmt(n);
+    if (document.getElementById("sx-look")) document.getElementById("sx-look").textContent = "1 update + gate";
+    if (document.getElementById("sx-total")) document.getElementById("sx-total").textContent = `${fmt(n)} + 64 slots`;
   }
   function colorize2() {
-    tfMat.color.copy(col("--tf")); sfMat.color.copy(col("--sift")); lineTf.color.copy(col("--tf")); lineSf.color.copy(col("--sift"));
+    tfMat.color.copy(col("--tf"));
+    sfMat.color.copy(col("--sift"));
+    sxMat.color.copy(col("--siftx"));
+    lineTf.color.copy(col("--tf"));
+    lineSf.color.copy(col("--sift"));
+    lineSx.color.copy(col("--siftx"));
+    lineSxShelf.color.copy(col("--k-val") || col("--siftx"));
     box.material.color.copy(col("--sift"));
+    boxX.material.color.copy(col("--siftx"));
+    shelfPlate.material.color.copy(col("--siftx-soft") || col("--rule"));
+    slotMat.color.copy(col("--k-key") || col("--siftx"));
+    gateRing.material.color.copy(col("--good") || col("--siftx"));
   }
   colorize2();
   const nSlider = document.getElementById("n-words");
