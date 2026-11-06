@@ -102,10 +102,10 @@ input[type="range"] { width: 100%; accent-color: var(--sift); }
 .slider-row { display: grid; gap: 6px; padding: 14px 18px; border-top: 1px solid var(--rule); }
 .slider-row .top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .membars { display: grid; gap: 10px; padding: 0 18px 18px; }
-.membar { display: grid; grid-template-columns: 125px 1fr auto; gap: 12px; align-items: center; font-size: var(--step--1); }
-.membar .track { height: 18px; background: var(--paper); border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; }
-.membar .fill { height: 100%; width: 0; border-radius: 4px; transition: width .25s ease; }
-.membar .val { font-family: var(--font-mono); font-variant-numeric: tabular-nums; min-width: 9ch; text-align: right; }
+.membar { display: grid; grid-template-columns: 130px 1fr 150px; gap: 12px; align-items: center; font-size: var(--step--1); }
+.membar .track { height: 20px; background: rgba(0,0,0,0.25); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; position: relative; }
+.membar .fill { height: 100%; width: 0; min-width: 14px; border-radius: 5px; transition: width .25s ease; }
+.membar .val { font-family: var(--font-mono); font-variant-numeric: tabular-nums; min-width: 12ch; text-align: right; }
 
 /* block walkthrough */
 .walk { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 0; }
@@ -231,10 +231,22 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
         <input id="ctx" type="range" min="4" max="14" step="1" value="10">
       </div>
       <div class="membars">
-        <div class="membar"><span class="tf-ink">Transformer</span><div class="track"><div class="fill" id="m-tf" style="background:var(--tf)"></div></div><span class="val" id="m-tf-v"></span></div>
-        <div class="membar"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" id="m-sf" style="background:var(--sift)"></div></div><span class="val" id="m-sf-v"></span></div>
-        <div class="membar"><span class="siftx-ink">SiftX (Ours)</span><div class="track"><div class="fill" id="m-sx" style="background:var(--siftx)"></div></div><span class="val" id="m-sx-v"></span></div>
-        <p class="note" id="m-note"></p>
+        <div class="membar">
+          <span class="tf-ink">Transformer</span>
+          <div class="track"><div class="fill" id="m-tf" style="background:var(--tf)"></div></div>
+          <span class="val tf-ink" id="m-tf-v"></span>
+        </div>
+        <div class="membar">
+          <span class="sift-ink">Mamba (Sift)</span>
+          <div class="track"><div class="fill" id="m-sf" style="background:var(--sift);box-shadow:0 0 10px rgba(42,120,214,0.6);"></div></div>
+          <span class="val sift-ink" id="m-sf-v"></span>
+        </div>
+        <div class="membar">
+          <span class="siftx-ink">SiftX (Ours)</span>
+          <div class="track"><div class="fill" id="m-sx" style="background:var(--siftx);box-shadow:0 0 10px rgba(139,92,246,0.6);"></div></div>
+          <span class="val siftx-ink" id="m-sx-v"></span>
+        </div>
+        <p class="note" id="m-note" style="padding-top:6px;font-size:0.92rem;"></p>
       </div>
     </div>
   </section>
@@ -680,17 +692,27 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
   const ctx = document.getElementById("ctx");
   function bytes(b) { return b >= 1048576 ? (b / 1048576).toFixed(1) + " MB" : Math.round(b / 1024) + " KB"; }
   function mem() {
-    const L = 2 ** +ctx.value, tf = KV_PER * L, mx = Math.max(tf, SIFTX_STATE);
+    const L = 2 ** +ctx.value;
+    const tf = KV_PER * L;
+    const mx = Math.max(tf, SIFTX_STATE);
+
     document.getElementById("ctx-v").textContent = L.toLocaleString("en-US") + " words";
-    document.getElementById("m-tf").style.width = (tf / mx * 100) + "%";
-    document.getElementById("m-sf").style.width = (SIFT_STATE / mx * 100) + "%";
-    document.getElementById("m-sx").style.width = (SIFTX_STATE / mx * 100) + "%";
-    document.getElementById("m-tf-v").textContent = bytes(tf);
-    document.getElementById("m-sf-v").textContent = bytes(SIFT_STATE);
-    document.getElementById("m-sx-v").textContent = bytes(SIFTX_STATE);
-    document.getElementById("m-note").textContent = L < 45
-      ? "For short texts the Transformer's cache is smaller. Sift and SiftX have fixed-size memory, costing the same from word 1."
-      : `At ${L.toLocaleString("en-US")} words, Transformer needs ${(tf / SIFTX_STATE).toFixed(0)}× more memory than SiftX (172 KB vs ${bytes(tf)}), while SiftX gives exact memory retrieval.`;
+    document.getElementById("m-tf").style.width = Math.max(2, (tf / mx * 100)) + "%";
+    document.getElementById("m-sf").style.width = Math.max(3, (SIFT_STATE / mx * 100)) + "%";
+    document.getElementById("m-sx").style.width = Math.max(4, (SIFTX_STATE / mx * 100)) + "%";
+
+    document.getElementById("m-tf-v").innerHTML = `${bytes(tf)} <span style="font-size:0.75rem;opacity:0.75;font-weight:400;">(grows O(L))</span>`;
+    document.getElementById("m-sf-v").innerHTML = `140 KB <span style="font-size:0.75rem;opacity:0.75;font-weight:400;">(fixed O(1))</span>`;
+    document.getElementById("m-sx-v").innerHTML = `172 KB <span style="font-size:0.75rem;opacity:0.75;font-weight:400;">(fixed O(1))</span>`;
+
+    const ratio = (tf / SIFTX_STATE).toFixed(0);
+    if (L <= 32) {
+      document.getElementById("m-note").innerHTML =
+        `At short text (${L} words), Transformer cache is smaller (${bytes(tf)}). Mamba and SiftX have fixed-size memory, costing the same from word 1.`;
+    } else {
+      document.getElementById("m-note").innerHTML =
+        `<span style="color:var(--siftx);font-weight:700;">★ Why 140 KB & 172 KB do not change:</span> They have <strong>constant O(1) state</strong>! While Transformer expands to <strong>${bytes(tf)}</strong>, SiftX stays permanently locked at <strong>172 KB</strong> (${ratio}× leaner right now).`;
+    }
   }
   ctx.addEventListener("input", mem); mem();
 
