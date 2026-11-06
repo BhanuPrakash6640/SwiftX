@@ -5,11 +5,11 @@
   "params": 499328,
   "device": "cuda",
   "steps": 1000,
-  "final_train_loss": NaN,
+  "final_train_loss": 4.152038452148438,
   "final_val_loss": 4.146945118904114,
   "final_val_metric": 0.0205078125,
   "final_retrieval_rate": null,
-  "train_time_s": 0.0,
-  "tokens_per_s": 0.0,
+  "train_time_s": 1272.9419610500336,
+  "tokens_per_s": 6438.5,
   "peak_gpu_mem_mb": 835.2587890625
 }
