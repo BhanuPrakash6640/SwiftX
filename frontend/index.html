@@ -353,14 +353,14 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
         <div class="bar-row"><span style="color:#a855f7">Hybrid SSM+Attn</span><div class="track"><div class="fill" style="width:3.16%;background:#a855f7"></div></div><span class="v">3.16%</span></div>
         <div class="bar-row"><span class="siftx-ink">SiftX (Learned Gate)</span><div class="track"><div class="fill" style="width:2.26%;background:var(--siftx)"></div></div><span class="v">2.26%</span></div>
         <div class="bar-row"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" style="width:2.05%;background:var(--sift)"></div></div><span class="v">2.05%</span></div>
-        <p class="note"><strong>Honest Convergence Note:</strong> With 64 possible values, the uniform random guessing baseline is 1/64 &approx; 1.56% (loss &approx; ln 64 &approx; 4.159). At 1,000 steps, all tested models remain near the chance floor (loss 4.10–4.15). Differences between models fall within statistical noise (&plusmn;0.2%), showing that no architecture has broken out of the chance baseline within 1,000 steps.</p>
+        <div class="bar-row"><span class="siftx-ink">SiftX (Recent / Sliding)</span><div class="track"><div class="fill" style="width:1.84%;background:var(--siftx)"></div></div><span class="v">1.84%</span></div>
+        <p class="note"><strong>Honest Convergence Note:</strong> With 64 possible values, uniform random guessing is 1/64 &approx; 1.56% (entropy &approx; ln 64 &approx; 4.159). At 1,000 steps, all tested models remain near the chance floor (loss 4.10–4.16). SiftX Recent yields 4.159 loss, matching pure chance entropy. Differences between models fall within statistical noise (&plusmn;0.2%), confirming that no architecture has broken out of chance within 1,000 steps.</p>
       </article>
       <article class="result">
         <span class="label">Inference State Memory at 4,096 tokens (RTX 3050 GPU)</span>
-        <div class="bar-row"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" style="width:0.85%;background:var(--sift)"></div></div><span class="v">140 KiB</span></div>
-        <div class="bar-row"><span class="siftx-ink">SiftX (Ours)</span><div class="track"><div class="fill" style="width:1.15%;background:var(--siftx)"></div></div><span class="v" style="color:var(--siftx);font-weight:700;">188 KiB</span></div>
-        <div class="bar-row"><span class="tf-ink">Transformer</span><div class="track"><div class="fill" style="width:100%;background:var(--tf)"></div></div><span class="v">16,384 KiB</span></div>
-        <p class="note">Measured footprint: Sift recurrent state is strictly constant at 140 KiB across sequence lengths. SiftX adds a bounded 64-slot memory bank (188 KiB total state), remaining strictly constant and <strong>87× leaner than the Transformer KV cache (16.4 MB)</strong> at 4,096 tokens.</p>
+        <div class="bar-row"><span class="sift-ink">Mamba (Sift) [Measured]</span><div class="track"><div class="fill" style="width:0.85%;background:var(--sift)"></div></div><span class="v" style="font-weight:700;">140 KiB</span></div>
+        <div class="bar-row"><span class="tf-ink">Transformer [Measured]</span><div class="track"><div class="fill" style="width:100%;background:var(--tf)"></div></div><span class="v">16,384 KiB</span></div>
+        <p class="note">Measured runtime state: Sift recurrent state is strictly constant at 140 KiB across sequence lengths, while Transformer KV cache scales linearly to 16,384 KiB (<strong>117× larger</strong> at 4k tokens). SiftX augments the SSM with a bounded RecallLayer ($M+C=96$ tokens maximum), preserving asymptotic $O(1)$ constant memory.</p>
       </article>
       <article class="result">
         <span class="label">WikiText-2 Char-Level Modeling · 3.7M params (lower is better)</span>

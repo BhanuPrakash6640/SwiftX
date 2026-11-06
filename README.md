@@ -75,18 +75,20 @@ All benchmarks measured directly on an **NVIDIA GeForce RTX 3050 Laptop GPU (4 G
   <img src="assets/memory_slider_screenshot.png" width="450" alt="Interactive Memory Scaling Comparison at 512 words">
 </p>
 
-> **Figure 4:** Interactive Memory Scaling from [`frontend/index.html`](frontend/index.html): At 512 context tokens, Transformer requires 2.0 MB KV cache, while Sift stays fixed at 140 KiB and SiftX stays bounded at 188 KiB ($O(1)$ constant memory).
+> **Figure 4:** Interactive Memory Scaling from [`frontend/index.html`](frontend/index.html): At 512 context tokens, Transformer requires 2.0 MB KV cache, while Sift stays strictly constant at 140 KiB ($O(1)$ constant memory).
 
-| Tokens | Sift Recurrent State (Measured) | SiftX State (Bounded 64 Slots) | Transformer KV Cache (Measured) | Memory Ratio (TF / Sift) |
-|---|---|---|---|---|
-| 256 | **140.0 KiB** | **188.2 KiB** | 1,024.0 KiB | 7.3× |
-| 512 | **140.0 KiB** | **188.2 KiB** | 2,048.0 KiB | 14.6× |
-| 1,024 | **140.0 KiB** | **188.2 KiB** | 4,096.0 KiB | 29.3× |
-| 2,048 | **140.0 KiB** | **188.2 KiB** | 8,192.0 KiB | 58.5× |
-| 4,096 | **140.0 KiB** | **188.2 KiB** | **16,384.0 KiB** | **117.0×** |
+| Tokens | Sift Recurrent State (Measured) | Transformer KV Cache (Measured) | Memory Ratio (TF / Sift) |
+|---|---|---|---|
+| 256 | **140.0 KiB** | 1,024.0 KiB | 7.3× |
+| 512 | **140.0 KiB** | 2,048.0 KiB | 14.6× |
+| 1,024 | **140.0 KiB** | 4,096.0 KiB | 29.3× |
+| 2,048 | **140.0 KiB** | 8,192.0 KiB | 58.5× |
+| 4,096 | **140.0 KiB** | **16,384.0 KiB** | **117.0×** |
 
 > [!NOTE]  
-> Sift and Transformer states are measured directly from live runtime tensors via `benchmarks/memory.py`. SiftX's 188.2 KiB state represents the allocated recurrent SSM state (140.0 KiB) plus the bounded 64-slot key/value/timestamp tensor buffer (48.2 KiB), remaining strictly constant past 64 generated tokens.
+> **Empirical Measurement & SiftX Bounded Memory Architecture:**  
+> Sift and Transformer inference states above are measured directly from live runtime tensors via `benchmarks/memory.py` across sequence lengths. Sift's recurrent state occupies exactly $7 \times 256 \times (16 + 4) \times 4\text{ bytes} = 140.0\text{ KiB}$ regardless of sequence length.  
+> SiftX augments the SSM stack with a middle `RecallLayer` holding at most $M + C$ tokens ($M=64$ persistent memory slots plus $C=32$ active local chunk tokens, bounded at 96 tokens maximum). Because tokens outside the top-$M$ slots are pruned at chunk boundaries, SiftX retains an asymptotic $O(1)$ memory bound that never grows with sequence length, avoiding the linear $O(L)$ scaling of the Transformer KV cache (which reaches 16.4 MB at 4k tokens).
 
 ---
 
@@ -104,12 +106,13 @@ While continuous selective state spaces excel at smooth sequential compression, 
 | **SiftX Standard (`mqar_siftx_s0`)** | 64 | Learned Top-k | Learned STE + Curric. | 4.1254 | 2.26% | 36.8% | 1190.8s |
 | **SiftX Always-On (`mqar_siftx_always_s0`)** | 64 | Learned Top-k | Fixed Open (1.0) | 4.1230 | 2.26% | 100.0% | 1151.6s |
 | **SiftX Surprise (`mqar_siftx_surprise_s0`)** | 64 | Surprise (B'MOJO) | Learned STE + Curric. | 4.0990 | 3.87% | 47.5% | 1132.3s |
+| **SiftX Recent (`mqar_siftx_recent_s0`)** | 64 | Recent (Sliding Window) | Learned STE + Curric. | 4.1589 | 1.84% | 42.5% | 1143.3s |
 | **Hybrid SSM+Attn (`mqar_hybrid_s0`)** | Full ($L$) | All Tokens | Full Attention | 4.1305 | 3.16% | 100.0% | 1222.7s |
 | **Transformer (`mqar_transformer_s0`)** | Full ($L$) | All Tokens | Dense KV Attention | 4.0954 | 3.92% | 100.0% | 39.3s |
 
 > **Honest Scientific Analysis:**  
 > The MQAR evaluation uses $n_{\text{values}} = 64$, corresponding to a **uniform random guessing baseline of $1/64 \approx 1.56\%$ accuracy** and theoretical cross-entropy loss of $\ln(64) \approx 4.159$.  
-> At 1,000 steps on 256-token sequences, **all architectures remain hovering near the chance floor** (validation loss 4.10–4.15, accuracy 2.0%–3.9%). The small variation between models (e.g. 3.87% vs 3.92%) falls within the statistical margin of error ($\pm 0.2\%$ on ~8,000 test questions), indicating that no model has broken out of the chance regime within this 1,000-step budget. (Original research configs specify 3,000 steps; full convergence dynamics require complete training runs).
+> At 1,000 steps on 256-token sequences, **all architectures remain hovering near the chance floor** (validation loss 4.10–4.16, accuracy 1.8%–3.9%). Notably, the sliding-window baseline (`mqar_siftx_recent_s0`) yields 4.1589 val loss—matching pure chance entropy $\ln(64)$ almost to the fourth decimal place. The small variation between models falls within the statistical margin of error ($\pm 0.2\%$ on ~8,000 test questions), indicating that no model has broken out of the chance regime within this 1,000-step budget. (Original research configs specify 3,000 steps; full convergence dynamics require complete training runs).
 
 ### Critical Failure Modes & Fixes Discovered During SiftX Research
 
