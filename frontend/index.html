@@ -102,7 +102,7 @@ input[type="range"] { width: 100%; accent-color: var(--sift); }
 .slider-row { display: grid; gap: 6px; padding: 14px 18px; border-top: 1px solid var(--rule); }
 .slider-row .top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .membars { display: grid; gap: 10px; padding: 0 18px 18px; }
-.membar { display: grid; grid-template-columns: 120px 1fr auto; gap: 12px; align-items: center; font-size: var(--step--1); }
+.membar { display: grid; grid-template-columns: 125px 1fr auto; gap: 12px; align-items: center; font-size: var(--step--1); }
 .membar .track { height: 18px; background: var(--paper); border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; }
 .membar .fill { height: 100%; width: 0; border-radius: 4px; transition: width .25s ease; }
 .membar .val { font-family: var(--font-mono); font-variant-numeric: tabular-nums; min-width: 9ch; text-align: right; }
@@ -123,7 +123,7 @@ input[type="range"] { width: 100%; accent-color: var(--sift); }
 .results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 @media (max-width: 720px) { .results { grid-template-columns: 1fr; } }
 .result { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 18px; display: grid; gap: 12px; align-content: start; }
-.bar-row { display: grid; grid-template-columns: 100px 1fr 64px; gap: 10px; align-items: center; font-size: var(--step--1); }
+.bar-row { display: grid; grid-template-columns: 115px 1fr 64px; gap: 10px; align-items: center; font-size: var(--step--1); }
 .bar-row .track { height: 14px; background: var(--paper); border-radius: 4px; overflow: hidden; border: 1px solid var(--rule); }
 .bar-row .fill { height: 100%; border-radius: 3px; }
 .bar-row .v { font-family: var(--font-mono); text-align: right; font-variant-numeric: tabular-nums; }
@@ -220,7 +220,7 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
       </div>
       <div class="compare-grid">
         <div><span class="label tf-ink">Transformer</span><span class="big tf-ink" id="tf-look">12 lookups</span><span class="note">for the newest word, and <span id="tf-total">78</span> in total so far</span></div>
-        <div><span class="label sift-ink">Sift</span><span class="big sift-ink" id="sf-look">1 update</span><span class="note">for the newest word, and <span id="sf-total">12</span> in total so far</span></div>
+        <div><span class="label sift-ink">Mamba (Sift)</span><span class="big sift-ink" id="sf-look">1 update</span><span class="note">for the newest word, and <span id="sf-total">12</span> in total so far</span></div>
       </div>
     </div>
 
@@ -231,7 +231,7 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
       </div>
       <div class="membars">
         <div class="membar"><span class="tf-ink">Transformer</span><div class="track"><div class="fill" id="m-tf" style="background:var(--tf)"></div></div><span class="val" id="m-tf-v"></span></div>
-        <div class="membar"><span class="sift-ink">Sift</span><div class="track"><div class="fill" id="m-sf" style="background:var(--sift)"></div></div><span class="val" id="m-sf-v"></span></div>
+        <div class="membar"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" id="m-sf" style="background:var(--sift)"></div></div><span class="val" id="m-sf-v"></span></div>
         <div class="membar"><span class="siftx-ink">SiftX (Ours)</span><div class="track"><div class="fill" id="m-sx" style="background:var(--siftx)"></div></div><span class="val" id="m-sx-v"></span></div>
         <p class="note" id="m-note"></p>
       </div>
@@ -336,13 +336,13 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
       <article class="result" style="border: 2px solid var(--siftx); background: var(--panel);">
         <span class="label">MQAR Multi-Query Associative Recall · 256 tokens <span style="background:var(--siftx-soft);color:var(--siftx);border:1px solid var(--siftx);border-radius:4px;padding:2px 6px;font-size:0.72rem;font-weight:700;margin-left:6px">THE SIFTX BREAKTHROUGH</span></span>
         <div class="bar-row"><span class="siftx-ink">SiftX (Ours)</span><div class="track"><div class="fill" style="width:100%;background:var(--siftx)"></div></div><span class="v" style="color:var(--siftx);font-weight:700;">Exact Recall</span></div>
-        <div class="bar-row"><span class="sift-ink">Sift</span><div class="track"><div class="fill" style="width:2.0%;background:var(--sift)"></div></div><span class="v">2.0%</span></div>
+        <div class="bar-row"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" style="width:2.0%;background:var(--sift)"></div></div><span class="v">2.0%</span></div>
         <div class="bar-row"><span class="tf-ink">Transformer</span><div class="track"><div class="fill" style="width:3.9%;background:var(--tf)"></div></div><span class="v">3.9%</span></div>
-        <p class="note"><strong>Why SiftX exists:</strong> Pure selective SSMs (Sift/Mamba) collapse to near-chance (2.0%) on long-context associative recall due to continuous fading memory. SiftX introduces a bounded 64-slot memory bank and learned gate to restore exact key-value retrieval.</p>
+        <p class="note"><strong>Why SiftX exists:</strong> Original selective SSMs (Mamba / Sift) collapse to near-chance (2.0%) on long-context associative recall due to continuous fading memory. SiftX introduces a bounded 64-slot memory bank and learned gate to restore exact key-value retrieval.</p>
       </article>
       <article class="result">
         <span class="label">Inference State Memory at 4,096 tokens (RTX 3050 GPU)</span>
-        <div class="bar-row"><span class="sift-ink">Sift</span><div class="track"><div class="fill" style="width:0.85%;background:var(--sift)"></div></div><span class="v">140 KiB</span></div>
+        <div class="bar-row"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" style="width:0.85%;background:var(--sift)"></div></div><span class="v">140 KiB</span></div>
         <div class="bar-row"><span class="siftx-ink">SiftX (Ours)</span><div class="track"><div class="fill" style="width:1.05%;background:var(--siftx)"></div></div><span class="v" style="color:var(--siftx);font-weight:700;">172 KiB</span></div>
         <div class="bar-row"><span class="tf-ink">Transformer</span><div class="track"><div class="fill" style="width:100%;background:var(--tf)"></div></div><span class="v">16,384 KiB</span></div>
         <p class="note">SiftX retains sub-quadratic $O(1)$ constant memory! Even with its 64-slot exact memory shelf, SiftX requires only 172 KiB at 4k tokens — <strong>95× smaller than Transformer KV cache (16.4 MB)</strong> while solving exact associative retrieval.</p>
@@ -350,14 +350,14 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
       <article class="result">
         <span class="label">WikiText-2 Language Modeling · 3.7M params (lower is better)</span>
         <div class="bar-row"><span class="siftx-ink">SiftX (Ours)</span><div class="track"><div class="fill" style="width:57.0%;background:var(--siftx)"></div></div><span class="v" style="color:var(--siftx);font-weight:700;">3.48 ppl</span></div>
-        <div class="bar-row"><span class="sift-ink">Sift</span><div class="track"><div class="fill" style="width:57.3%;background:var(--sift)"></div></div><span class="v">3.50 ppl</span></div>
+        <div class="bar-row"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" style="width:57.3%;background:var(--sift)"></div></div><span class="v">3.50 ppl</span></div>
         <div class="bar-row"><span class="tf-ink">Transformer</span><div class="track"><div class="fill" style="width:100%;background:var(--tf)"></div></div><span class="v">6.10 ppl</span></div>
-        <p class="note">Both Sift and SiftX outperform the Transformer baseline by over 42% lower perplexity (3.48–3.50 vs 6.10) on natural language text, leveraging continuous state transitions.</p>
+        <p class="note">Both Mamba (Sift) and SiftX outperform the Transformer baseline by over 42% lower perplexity (3.48–3.50 vs 6.10) on natural language text, leveraging continuous state transitions.</p>
       </article>
       <article class="result">
         <span class="label">Copy test · memorize 16 symbols, repeat them</span>
         <div class="bar-row"><span class="siftx-ink">SiftX (Ours)</span><div class="track"><div class="fill" style="width:100%;background:var(--siftx)"></div></div><span class="v" style="color:var(--siftx);font-weight:700;">100.0%</span></div>
-        <div class="bar-row"><span class="sift-ink">Sift</span><div class="track"><div class="fill" style="width:100%;background:var(--sift)"></div></div><span class="v">100.0%</span></div>
+        <div class="bar-row"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" style="width:100%;background:var(--sift)"></div></div><span class="v">100.0%</span></div>
         <div class="bar-row"><span class="tf-ink">Transformer</span><div class="track"><div class="fill" style="width:100%;background:var(--tf)"></div></div><span class="v">100.0%</span></div>
         <p class="note">Random guessing scores 12.5%. All models achieve perfect 100.0% exact match on RTX 3050 GPU within 3,000 steps.</p>
       </article>
@@ -365,15 +365,15 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
         <span class="label">Shakespeare Character Modeling · 0.8M params (lower is better)</span>
         <div class="bar-row"><span class="tf-ink">Transformer</span><div class="track"><div class="fill" style="width:69.1%;background:var(--tf)"></div></div><span class="v">4.69 ppl</span></div>
         <div class="bar-row"><span class="siftx-ink">SiftX (Ours)</span><div class="track"><div class="fill" style="width:90.1%;background:var(--siftx)"></div></div><span class="v" style="color:var(--siftx);font-weight:700;">6.12 ppl</span></div>
-        <div class="bar-row"><span class="sift-ink">Sift</span><div class="track"><div class="fill" style="width:100%;background:var(--sift)"></div></div><span class="v">6.79 ppl</span></div>
+        <div class="bar-row"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" style="width:100%;background:var(--sift)"></div></div><span class="v">6.79 ppl</span></div>
         <p class="note">Where pure SSMs struggle: Transformer achieves lower validation perplexity on character-level Shakespeare (4.69 vs 6.79). SiftX's associative memory bridge narrows the gap from 6.79 down to 6.12.</p>
       </article>
       <article class="result">
         <span class="label">Adding test · find two marked numbers in 100, add them</span>
         <div class="bar-row"><span class="tf-ink">Transformer</span><div class="track"><div class="fill" style="width:100%;background:var(--tf)"></div></div><span class="v">100.0%</span></div>
         <div class="bar-row"><span class="siftx-ink">SiftX (Ours)</span><div class="track"><div class="fill" style="width:98.5%;background:var(--siftx)"></div></div><span class="v" style="color:var(--siftx);font-weight:700;">98.5%</span></div>
-        <div class="bar-row"><span class="sift-ink">Sift</span><div class="track"><div class="fill" style="width:94.9%;background:var(--sift)"></div></div><span class="v" id="add-sift">94.9%</span></div>
-        <p class="note">Share of answers within ±0.04 of the true sum. SiftX improves upon pure Sift by holding isolated marked positions in its bounded memory slots.</p>
+        <div class="bar-row"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" style="width:94.9%;background:var(--sift)"></div></div><span class="v" id="add-sift">94.9%</span></div>
+        <p class="note">Share of answers within ±0.04 of the true sum. SiftX improves upon pure Mamba by holding isolated marked positions in its bounded memory slots.</p>
       </article>
       <article class="result">
         <span class="label">Dynamic Gate Efficiency · Query Detection</span>
