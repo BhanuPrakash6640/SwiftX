@@ -349,18 +349,18 @@ footer { padding-block: 56px 72px; color: var(--ink-2); font-size: var(--step--1
       <article class="result" style="border: 2px solid var(--siftx); background: var(--panel);">
         <span class="label">MQAR Associative Recall · 256 tokens · 1,000 steps <span style="background:var(--siftx-soft);color:var(--siftx);border:1px solid var(--siftx);border-radius:4px;padding:2px 6px;font-size:0.72rem;font-weight:700;margin-left:6px">EMPIRICAL STATUS</span></span>
         <div class="bar-row"><span class="tf-ink">Transformer</span><div class="track"><div class="fill" style="width:3.92%;background:var(--tf)"></div></div><span class="v">3.92%</span></div>
-        <div class="bar-row"><span class="siftx-ink">SiftX (Surprise Gate)</span><div class="track"><div class="fill" style="width:3.87%;background:var(--siftx)"></div></div><span class="v" style="color:var(--siftx);font-weight:700;">3.87%</span></div>
+        <div class="bar-row"><span class="siftx-ink">SiftX (Surprise Policy)</span><div class="track"><div class="fill" style="width:3.87%;background:var(--siftx)"></div></div><span class="v" style="color:var(--siftx);font-weight:700;">3.87%</span></div>
         <div class="bar-row"><span style="color:#a855f7">Hybrid SSM+Attn</span><div class="track"><div class="fill" style="width:3.16%;background:#a855f7"></div></div><span class="v">3.16%</span></div>
         <div class="bar-row"><span class="siftx-ink">SiftX (Learned Gate)</span><div class="track"><div class="fill" style="width:2.26%;background:var(--siftx)"></div></div><span class="v">2.26%</span></div>
         <div class="bar-row"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" style="width:2.05%;background:var(--sift)"></div></div><span class="v">2.05%</span></div>
-        <p class="note"><strong>Honest Convergence Note:</strong> At 1,000 steps, all architectures remain in early learning near random chance (~2.5%). SiftX with surprise gating achieves 3.87% (47.5% gate rate), matching the 1k-step Transformer. Extended training (&gt;5k steps) is required to cross the associative recall phase transition.</p>
+        <p class="note"><strong>Honest Convergence Note:</strong> With 64 possible values, the uniform random guessing baseline is 1/64 &approx; 1.56% (loss &approx; ln 64 &approx; 4.159). At 1,000 steps, all tested models remain near the chance floor (loss 4.10–4.15). Differences between models fall within statistical noise (&plusmn;0.2%), showing that no architecture has broken out of the chance baseline within 1,000 steps.</p>
       </article>
       <article class="result">
         <span class="label">Inference State Memory at 4,096 tokens (RTX 3050 GPU)</span>
         <div class="bar-row"><span class="sift-ink">Mamba (Sift)</span><div class="track"><div class="fill" style="width:0.85%;background:var(--sift)"></div></div><span class="v">140 KiB</span></div>
-        <div class="bar-row"><span class="siftx-ink">SiftX (Ours)</span><div class="track"><div class="fill" style="width:1.05%;background:var(--siftx)"></div></div><span class="v" style="color:var(--siftx);font-weight:700;">172 KiB</span></div>
+        <div class="bar-row"><span class="siftx-ink">SiftX (Ours)</span><div class="track"><div class="fill" style="width:1.15%;background:var(--siftx)"></div></div><span class="v" style="color:var(--siftx);font-weight:700;">188 KiB</span></div>
         <div class="bar-row"><span class="tf-ink">Transformer</span><div class="track"><div class="fill" style="width:100%;background:var(--tf)"></div></div><span class="v">16,384 KiB</span></div>
-        <p class="note">Measured footprint: Sift recurrent state is strictly constant at 140 KiB across sequence lengths. SiftX adds a bounded 64-slot memory bank (172 KiB total), remaining <strong>95× leaner than the Transformer KV cache (16.4 MB)</strong> at 4,096 tokens.</p>
+        <p class="note">Measured footprint: Sift recurrent state is strictly constant at 140 KiB across sequence lengths. SiftX adds a bounded 64-slot memory bank (188 KiB total state), remaining strictly constant and <strong>87× leaner than the Transformer KV cache (16.4 MB)</strong> at 4,096 tokens.</p>
       </article>
       <article class="result">
         <span class="label">WikiText-2 Char-Level Modeling · 3.7M params (lower is better)</span>

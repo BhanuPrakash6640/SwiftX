@@ -13,13 +13,19 @@ Memory.
     python -m benchmarks.memory
 """
 
+import argparse
 import json
+import os
 import subprocess
 import sys
 
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+
 import torch
 
-from benchmarks.common import ROOT, device, models, save
+from benchmarks.common import device, models, save
 
 
 def tensor_bytes(obj):
@@ -93,7 +99,10 @@ def training_memory(dev, lengths, batch=4):
 
 
 def main():
-    dev = device()
+    parser = argparse.ArgumentParser(description="Memory benchmark")
+    parser.add_argument("--device", default=None, help="Device to run on (cpu or cuda)")
+    args = parser.parse_args()
+    dev = args.device or device()
     if dev == "cpu" and sys.platform.startswith("win"):
         print("CPU peak-memory measurement needs Linux/macOS (resource module); skipping part 2.")
         train = None

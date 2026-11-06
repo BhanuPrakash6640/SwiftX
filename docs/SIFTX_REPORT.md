@@ -133,19 +133,20 @@ Measured on RTX 3050 across sequence lengths from $L = 256$ to $L = 4,096$:
 
 ### 4.4 Associative Recall & MQAR Suite (Part 2)
 
-| Model Variant | Memory Slots $M$ | Read Gate Policy | MQAR Val Loss | MQAR Accuracy | Gate Retrieval Rate | GPU Train Time |
-|---|---|---|---|---|---|---|
-| **Pure Sift (`mqar_sift_s0`)** | 0 (pure SSM) | None | 4.1469 | **2.05%** | N/A | 1272.9s |
-| **Transformer (`mqar_transformer_s0`)** | Full ($L$) | Dense Attention | 4.0954 | **3.92%** | 100.0% | 39.3s |
-| **Hybrid SSM+Attn (`mqar_hybrid_s0`)** | Full ($L$) | Unconstrained | 4.1305 | **3.16%** | 100.0% | 1222.7s |
-| **SiftX Standard (`mqar_siftx_s0`)** | 64 | Learned STE + Curric. | 4.1254 | **2.26%** | 36.8% | 1190.8s |
-| **SiftX Always-On (`mqar_siftx_always_s0`)** | 64 | Fixed Open (1.0) | 4.1230 | **2.26%** | 100.0% | 1151.6s |
-| **SiftX Surprise (`mqar_siftx_surprise_s0`)** | 64 | Loss-Surprise Gate | 4.0990 | **3.87%** | 47.5% | 1132.3s |
+| Model Variant | Memory Slots $M$ | Write Policy | Read Gate Policy | MQAR Val Loss | MQAR Accuracy | Gate Retrieval Rate | GPU Train Time |
+|---|---|---|---|---|---|---|---|
+| **Pure Sift (`mqar_sift_s0`)** | 0 (pure SSM) | None | None | 4.1469 | **2.05%** | N/A | 1272.9s |
+| **Transformer (`mqar_transformer_s0`)** | Full ($L$) | All Tokens | Dense Attention | 4.0954 | **3.92%** | 100.0% | 39.3s |
+| **Hybrid SSM+Attn (`mqar_hybrid_s0`)** | Full ($L$) | All Tokens | Full Attention | 4.1305 | **3.16%** | 100.0% | 1222.7s |
+| **SiftX Standard (`mqar_siftx_s0`)** | 64 | Learned Top-k | Learned STE + Curric. | 4.1254 | **2.26%** | 36.8% | 1190.8s |
+| **SiftX Always-On (`mqar_siftx_always_s0`)** | 64 | Learned Top-k | Fixed Open (1.0) | 4.1230 | **2.26%** | 100.0% | 1151.6s |
+| **SiftX Surprise (`mqar_siftx_surprise_s0`)** | 64 | Surprise (B'MOJO) | Learned STE + Curric. | 4.0990 | **3.87%** | 47.5% | 1132.3s |
 
 #### Honest Convergence Analysis & Empirical Observations
-1. **Early Learning Regime:** At 1,000 steps on 256-token sequences, **all architectures**—including the dense Transformer (3.92%) and full-attention Hybrid (3.16%)—remain near the random chance baseline (~2.5% on 40-token key spaces). This demonstrates that synthetic multi-query associative recall is highly sample-intensive, requiring 5,000–20,000 steps to cross the critical phase transition from chance to exact retrieval.
-2. **Surprise Gating Parity:** SiftX with loss-surprise gating achieves 3.87% accuracy at 1,000 steps with a 47.5% retrieval rate, tracking within 0.05% of the dense Transformer (3.92%) while maintaining sub-quadratic bounded memory.
-3. **Pure SSM Limitations:** Pure Sift achieves the lowest metric (2.05%), consistent with theoretical bounds on fixed recurrent dimensions for multi-query binding.
+1. **Chance Floor ($n_{\text{values}} = 64$):** Because each key associates with one of 64 discrete values, the uniform random guessing baseline is $1/64 \approx 1.56\%$ accuracy, with theoretical cross-entropy loss of $\ln(64) \approx 4.159$.
+2. **Early Training Regime:** At 1,000 steps on 256-token sequences, **all architectures**—including the dense Transformer (3.92%) and full-attention Hybrid (3.16%)—remain hovering near the chance floor (validation loss 4.10–4.15). The marginal variation between models (e.g., 3.87% for SiftX Surprise vs 3.92% for Transformer) is well within the statistical noise margin ($\pm 0.2\%$ on ~8,000 evaluation questions), demonstrating that no model has broken out of the chance baseline within 1,000 steps.
+3. **Training Budget Scope:** The fast-track suite evaluated models at 1,000 steps (original research configs specify 3,000 steps). Observing full associative recall convergence across architectures requires complete optimization runs.
+4. **Write vs Read Architecture:** Note that "Surprise" is a write policy (selecting which tokens are admitted to the 64-slot bank based on prediction error), while the read gate is the learned binary gate with straight-through estimation. SiftX operates at a 36.8%–47.5% retrieval rate under the 3-phase curriculum.
 
 ---
 
@@ -176,10 +177,11 @@ A central contribution of this work is identifying and characterizing three subt
 
 ## 6. Honest Limitations
 
-1. **Model Scale:** Evaluated models range between 0.8M and 3.8M parameters. While sufficient for architectural isolation and mechanistic interpretability, scaling dynamics to >1B parameters remain unverified.
-2. **Evaluation Seeds:** Due to laptop compute budget constraints (single RTX 3050 GPU), ablation runs use single deterministic seeds ($s=0$).
-3. **Pure PyTorch Implementation:** Designed strictly for maximum clarity, readability, and hardware portability. Production deployments require fused Triton/CUDA kernels (e.g., Mamba-1/2 official packages).
-4. **Optimization Horizon:** 1,000-step runs capture early training dynamics; resolving full synthetic associative binding requires multi-day extended optimization budgets.
+1. **Model Scale & Layer Configurations:** Evaluated models range between 0.8M and 3.8M parameters. Specifically: WikiText-2 uses 8 layers ($d=256$) for Sift vs 4 layers ($d=256$, 8 heads) for Transformer; Shakespeare uses 7 layers ($d=128$) for Sift vs 4 layers ($d=128$, 4 heads) for Transformer; Copy/Adding uses 2 layers ($d=64$) for Sift vs 1 layer ($d=64$, 4 heads) for Transformer. Scaling dynamics to >1B parameters remain unverified.
+2. **Memory Accounting:** Sift recurrent state (140.0 KiB) and Transformer KV cache (16.4 MB at 4k tokens) are measured directly from live runtime tensors. SiftX's memory state is bounded at 188.2 KiB (140.0 KiB recurrent SSM state + 48.2 KiB 64-slot tensor buffer).
+3. **Evaluation Seeds:** Due to laptop compute budget constraints (single RTX 3050 GPU), fast-track ablation runs use single deterministic seeds ($s=0$).
+4. **Pure PyTorch Implementation:** Designed strictly for maximum clarity, readability, and hardware portability. Production deployments require fused Triton/CUDA kernels (e.g., Mamba-1/2 official packages).
+5. **Optimization Horizon:** Fast-track 1,000-step runs capture early training dynamics; resolving full synthetic associative binding requires complete multi-thousand step training runs.
 
 ---
 

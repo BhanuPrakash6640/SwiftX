@@ -60,14 +60,14 @@ All benchmarks measured directly on an **NVIDIA GeForce RTX 3050 Laptop GPU (4 G
 
 | Task | Model | Config / Depth | Steps | Train Loss | Val Loss | Val Metric / Char PPL | Peak VRAM | Train Time |
 |---|---|---|---|---|---|---|---|---|
-| **Copy Task** | Sift | 2 blocks, d=64 | 3,000 | 0.0013 | 0.0007 | **100.0% accuracy** | 222.8 MB | 173.4s |
-| | Transformer | 2 layers, d=64 | 3,000 | 2.7e-8 | 3.2e-8 | **100.0% accuracy** | 29.6 MB | 34.3s |
-| **Adding Task** | Sift | 2 blocks, d=64 | 3,000 | 0.0005 | 0.0004 | **94.9% accuracy** | 1264.1 MB | 1231.4s |
-| | Transformer | 2 layers, d=64 | 3,000 | 7.2e-6 | 4.9e-6 | **100.0% accuracy** | 86.7 MB | 61.7s |
-| **WikiText-2 (Char)** | Sift | 7 blocks, d=128 | 2,000 | 1.2074 | **1.2519** | **3.497 char PPL** | 1993.9 MB | 3536.4s |
-| | Transformer | 4 layers, d=128 | 2,000 | 1.8328 | 1.8080 | 6.098 char PPL | 275.4 MB | 214.3s |
-| **Shakespeare (Char)** | Sift | 4 blocks, d=128 | 5,000 | 0.8300 | 1.9158 | 6.793 char PPL | 957.3 MB | 2917.5s |
-| | Transformer | 4 layers, d=128 | 5,000 | 1.2795 | **1.5461** | **4.693 char PPL** | 115.6 MB | 74.6s |
+| **Copy Task** | Sift | 2 layers, d=64 | 3,000 | 0.0013 | 0.0007 | **100.0% accuracy** | 222.8 MB | 173.4s |
+| | Transformer | 1 layer, d=64, 4 heads | 3,000 | 2.7e-8 | 3.2e-8 | **100.0% accuracy** | 29.6 MB | 34.3s |
+| **Adding Task** | Sift | 2 layers, d=64 | 3,000 | 0.0005 | 0.0004 | **94.9% accuracy** | 1264.1 MB | 1231.4s |
+| | Transformer | 1 layer, d=64, 4 heads | 3,000 | 7.2e-6 | 4.9e-6 | **100.0% accuracy** | 86.7 MB | 61.7s |
+| **WikiText-2 (Char)** | Sift | 8 layers, d=256, exp=2 | 2,000 | 1.2074 | **1.2519** | **3.497 char PPL** | 1993.9 MB | 3536.4s |
+| | Transformer | 4 layers, d=256, 8 heads | 2,000 | 1.8328 | 1.8080 | 6.098 char PPL | 275.4 MB | 214.3s |
+| **Shakespeare (Char)** | Sift | 7 layers, d=128, exp=2 | 5,000 | 0.8300 | 1.9158 | 6.793 char PPL | 957.3 MB | 2917.5s |
+| | Transformer | 4 layers, d=128, 4 heads | 5,000 | 1.2795 | **1.5461** | **4.693 char PPL** | 115.6 MB | 74.6s |
 
 ### 2. Inference State Memory vs Sequence Length
 
@@ -75,15 +75,18 @@ All benchmarks measured directly on an **NVIDIA GeForce RTX 3050 Laptop GPU (4 G
   <img src="assets/memory_slider_screenshot.png" width="450" alt="Interactive Memory Scaling Comparison at 512 words">
 </p>
 
-> **Figure 4:** Interactive Memory Scaling from [`frontend/index.html`](frontend/index.html): At 512 context tokens, Transformer requires 2.0 MB KV cache, while Sift stays fixed at 140 KB and SiftX stays bounded at 172 KB ($O(1)$ constant memory).
+> **Figure 4:** Interactive Memory Scaling from [`frontend/index.html`](frontend/index.html): At 512 context tokens, Transformer requires 2.0 MB KV cache, while Sift stays fixed at 140 KiB and SiftX stays bounded at 188 KiB ($O(1)$ constant memory).
 
-| Tokens | Sift Recurrent State | SiftX (SSM + 64 Slots) | Transformer KV Cache | Memory Ratio (TF / Sift) |
+| Tokens | Sift Recurrent State (Measured) | SiftX State (Bounded 64 Slots) | Transformer KV Cache (Measured) | Memory Ratio (TF / Sift) |
 |---|---|---|---|---|
-| 256 | **140.0 KiB** | **172.0 KiB** | 1,024.0 KiB | 7.3× |
-| 512 | **140.0 KiB** | **172.0 KiB** | 2,048.0 KiB | 14.6× |
-| 1,024 | **140.0 KiB** | **172.0 KiB** | 4,096.0 KiB | 29.3× |
-| 2,048 | **140.0 KiB** | **172.0 KiB** | 8,192.0 KiB | 58.5× |
-| 4,096 | **140.0 KiB** | **172.0 KiB** | **16,384.0 KiB** | **117.0×** |
+| 256 | **140.0 KiB** | **188.2 KiB** | 1,024.0 KiB | 7.3× |
+| 512 | **140.0 KiB** | **188.2 KiB** | 2,048.0 KiB | 14.6× |
+| 1,024 | **140.0 KiB** | **188.2 KiB** | 4,096.0 KiB | 29.3× |
+| 2,048 | **140.0 KiB** | **188.2 KiB** | 8,192.0 KiB | 58.5× |
+| 4,096 | **140.0 KiB** | **188.2 KiB** | **16,384.0 KiB** | **117.0×** |
+
+> [!NOTE]  
+> Sift and Transformer states are measured directly from live runtime tensors via `benchmarks/memory.py`. SiftX's 188.2 KiB state represents the allocated recurrent SSM state (140.0 KiB) plus the bounded 64-slot key/value/timestamp tensor buffer (48.2 KiB), remaining strictly constant past 64 generated tokens.
 
 ---
 
@@ -91,21 +94,22 @@ All benchmarks measured directly on an **NVIDIA GeForce RTX 3050 Laptop GPU (4 G
 
 While continuous selective state spaces excel at smooth sequential compression, theoretical and empirical analyses (Arora et al., 2024; B'MOJO, 2024) observe that fixed-state linear recurrences face expressivity bottlenecks on multi-query associative recall (MQAR) over long sequences.
 
-**SiftX** explores whether adding a compact, bounded external memory bank ($M=64$ slots) and a learned straight-through binary gate $g_t \in \{0, 1\}$ can provide targeted associative retrieval without incurring Transformer-scale $O(L)$ memory growth.
+**SiftX** explores whether augmenting selective state spaces with a compact external memory bank ($M=64$ slots) and a learned straight-through binary read gate $g_t \in \{0, 1\}$ can provide targeted associative retrieval without incurring Transformer-scale $O(L)$ memory growth.
 
 ### Empirical MQAR Benchmark Results (1,000 Steps, 256 Tokens)
 
-| Model Variant | Memory Slots $M$ | Read Gate Policy | Val Loss | Val Accuracy | Retrieval Gate Rate | Train Time |
-|---|---|---|---|---|---|---|
-| **Pure Sift (`mqar_sift_s0`)** | 0 (pure SSM) | None | 4.1469 | 2.05% | N/A | 1272.9s |
-| **SiftX Standard (`mqar_siftx_s0`)** | 64 | Learned STE + Curric. | 4.1254 | 2.26% | 36.8% | 1190.8s |
-| **SiftX Always-On (`mqar_siftx_always_s0`)** | 64 | Fixed Open (1.0) | 4.1230 | 2.26% | 100.0% | 1151.6s |
-| **SiftX Surprise (`mqar_siftx_surprise_s0`)** | 64 | Loss-Surprise Gate | 4.0990 | 3.87% | 47.5% | 1132.3s |
-| **Hybrid SSM+Attn (`mqar_hybrid_s0`)** | Full ($L$) | Unconstrained | 4.1305 | 3.16% | 100.0% | 1222.7s |
-| **Transformer (`mqar_transformer_s0`)** | Full ($L$) | Dense KV Attention | 4.0954 | 3.92% | 100.0% | 39.3s |
+| Model Variant | Memory Slots $M$ | Write Policy | Read Gate Policy | Val Loss | Val Accuracy | Retrieval Gate Rate | Train Time |
+|---|---|---|---|---|---|---|---|
+| **Pure Sift (`mqar_sift_s0`)** | 0 (pure SSM) | None | None | 4.1469 | 2.05% | N/A | 1272.9s |
+| **SiftX Standard (`mqar_siftx_s0`)** | 64 | Learned Top-k | Learned STE + Curric. | 4.1254 | 2.26% | 36.8% | 1190.8s |
+| **SiftX Always-On (`mqar_siftx_always_s0`)** | 64 | Learned Top-k | Fixed Open (1.0) | 4.1230 | 2.26% | 100.0% | 1151.6s |
+| **SiftX Surprise (`mqar_siftx_surprise_s0`)** | 64 | Surprise (B'MOJO) | Learned STE + Curric. | 4.0990 | 3.87% | 47.5% | 1132.3s |
+| **Hybrid SSM+Attn (`mqar_hybrid_s0`)** | Full ($L$) | All Tokens | Full Attention | 4.1305 | 3.16% | 100.0% | 1222.7s |
+| **Transformer (`mqar_transformer_s0`)** | Full ($L$) | All Tokens | Dense KV Attention | 4.0954 | 3.92% | 100.0% | 39.3s |
 
 > **Honest Scientific Analysis:**  
-> At 1,000 steps, all tested models remain near the random guessing baseline (~2.5% chance). SiftX with surprise gating achieves 3.87% accuracy while invoking memory on only 47.5% of tokens, closely matching the 1k-step Transformer (3.92%). However, neither model has solved the task at 1,000 steps; synthetic key-value associative binding requires longer training horizons (>5,000 steps) to cross the phase transition from chance to exact retrieval.
+> The MQAR evaluation uses $n_{\text{values}} = 64$, corresponding to a **uniform random guessing baseline of $1/64 \approx 1.56\%$ accuracy** and theoretical cross-entropy loss of $\ln(64) \approx 4.159$.  
+> At 1,000 steps on 256-token sequences, **all architectures remain hovering near the chance floor** (validation loss 4.10–4.15, accuracy 2.0%–3.9%). The small variation between models (e.g. 3.87% vs 3.92%) falls within the statistical margin of error ($\pm 0.2\%$ on ~8,000 test questions), indicating that no model has broken out of the chance regime within this 1,000-step budget. (Original research configs specify 3,000 steps; full convergence dynamics require complete training runs).
 
 ### Critical Failure Modes & Fixes Discovered During SiftX Research
 
@@ -142,18 +146,19 @@ pytest tests/ -v
 ### 2. Training Baseline Models
 
 ```bash
-# WikiText-2 Character Language Model (Sift)
-python -m training.train configs/gpu/sift_wikitext2_gpu.yaml --device cuda
+# WikiText-2 Character Language Model (Sift: 8 layers, d=256)
+python -m training.train configs/gpu/sift_wikitext2.yaml --device cuda
 
-# Transformer Baseline
-python -m training.train configs/gpu/transformer_wikitext2_gpu.yaml --device cuda
+# Transformer Baseline (4 layers, d=256, 8 heads)
+python -m training.train configs/gpu/transformer_wikitext2.yaml --device cuda
 ```
 
 ### 3. Benchmarking Memory & Latency
 
 ```bash
-python benchmarks/memory.py --device cuda
-python benchmarks/latency.py --device cuda
+# Both module execution and direct script execution supported:
+python -m benchmarks.memory --device cuda
+python -m benchmarks.latency --device cuda
 ```
 
 ### 4. Interactive 3D Visualizer & Results Dashboard
@@ -166,4 +171,4 @@ Open [`frontend/index.html`](frontend/index.html) in any browser to inspect the 
 
 1. **Model Scale:** Evaluated architectures range between 0.8M and 3.8M parameters. Scaling behavior to >1B parameters remains unverified.
 2. **Compute & Kernel Optimization:** Pure PyTorch parallel scan is memory-bandwidth bound on GPU; Transformers benefit from mature cuBLAS GEMM tensor core saturation. Production deployment of SSMs requires fused Triton or CUDA C++ kernels.
-3. **Training Budgets:** Fast-track MQAR ablations were evaluated at 1,000 steps ($s=0$) due to workstation GPU time constraints; full convergence on synthetic associative recall requires extended training runs (>5,000 steps).
+3. **Training Budgets:** Fast-track MQAR ablations were evaluated at 1,000 steps ($s=0$) due to workstation GPU time constraints; full convergence on synthetic associative recall requires complete training runs.

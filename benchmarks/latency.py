@@ -9,7 +9,14 @@ Inference latency.
     python -m benchmarks.latency
 """
 
+import argparse
+import os
+import sys
 import time
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
 
 import torch
 
@@ -49,7 +56,10 @@ def generation_latency(ms, dev, n_tokens, report_every):
 
 
 def main():
-    dev = device()
+    parser = argparse.ArgumentParser(description="Latency benchmark")
+    parser.add_argument("--device", default=None, help="Device to run on (cpu or cuda)")
+    args = parser.parse_args()
+    dev = args.device or device()
     ms = {k: m.eval() for k, m in models(dev).items()}
     prompt = prompt_latency(ms, dev, [128, 256, 512, 1024, 2048, 4096])
     gen = generation_latency(ms, dev, n_tokens=4096, report_every=256)
